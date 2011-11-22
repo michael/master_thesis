@@ -202,11 +202,6 @@ D3 can be extended through optional modules which can be included as needed with
 
 \section{Performance Evaluation}
 
-In addition to the qualitative evaluation based on requirements, a performance benchmark has been implemented that opposes Unveil.js with D3.js. 
-The benchmark considers initialization times and frame rates by constructing a scatterplot using different numbers of objects. The results, as shown in Figure~\ref{fig:benchmarks}, reveal that overall performance highly depends on the browser's implementation of native interfaces (HTML Canvas and SVG). Current webkit-based browsers (Google Chrome, Safari) provide high performance rendering for the SVG interface, which makes D3 noticeably faster here. Moreover profiling results have shown that Unveil.js performance (compared to native usage of the Canvas element) is decreased due to the application of matrix transformations. Unveil.js uses its own matrix library in order to let users adjust the object drawing order. However, this has been identified as a significant bottleneck and should be optimized in future.
-
-In general both libraries offer sufficiently fast performance to implement interactive visualizations involving animation. Importantly, the results shown in the benchmark are just a snapshot considering a single use-case. According to the explanations in the qualitative evaluation, visualization designers need to decide themselves, which is the best solution for a particular task.
-
 \begin{figure}
 \centering
 \includegraphics[width=1\textwidth]{benchmarks}
@@ -214,11 +209,12 @@ In general both libraries offer sufficiently fast performance to implement inter
 \label{fig:benchmarks}
 \end{figure}
 
+In addition to the qualitative evaluation based on requirements, a performance benchmark has been implemented that opposes Unveil.js with D3.js. 
+The benchmark considers initialization times and frame rates by constructing a scatterplot using different numbers of objects. The results, as shown in Figure~\ref{fig:benchmarks}, reveal that overall performance highly depends on the browser's implementation of native interfaces (HTML Canvas and SVG). Current webkit-based browsers (Google Chrome, Safari) provide high performance rendering for the SVG interface, which makes D3 noticeably faster here. Moreover profiling results have shown that Unveil.js performance (compared to native usage of the Canvas element) is decreased due to the application of matrix transformations. Unveil.js uses its own matrix library in order to let users adjust the object drawing order. However, this has been identified as a significant bottleneck and should be optimized in future.
 
+In general both libraries offer sufficiently fast performance to implement interactive visualizations involving animation. Importantly, the results shown in the benchmark are just a snapshot considering a single use-case. According to the explanations in the qualitative evaluation, visualization designers need to decide themselves, which is the best solution for a particular task.
 
 \section{Summary}
-
-The toolkits examined both try to solve the same range of issues involving \emph{expressive methods of specification} and solutions for \emph{animation} and \emph{interaction}. D3.js, on the one hand, uses a representation transparent approach and intentionally abandons the possibility of cross-platform deployment. Instead, it focuses on providing a simplified interface to interact with web-native technology. Unveil.js, in turn, targets highly data-driven visualization tasks using a toolkit specific abstraction for describing scenes. It has its focus on modularization and code-reuse and uses an object-oriented approach to match the mental model of real world objects. 
 
 \begin{table}
 \caption{Comparison of individual scores between Unveil.js and D3.js}
@@ -249,6 +245,10 @@ Extensibility & 3 & 3 \\
 % \hline
 \end{tabular}
 \end{table}
+
+The toolkits examined both try to solve the same range of issues involving \emph{expressive methods of specification} and solutions for \emph{animation} and \emph{interaction}. D3.js, on the one hand, uses a representation transparent approach and intentionally abandons the possibility of cross-platform deployment. Instead, it focuses on providing a simplified interface to interact with web-native technology. Unveil.js, in turn, targets highly data-driven visualization tasks using a toolkit specific abstraction for describing scenes. It has its focus on modularization and code-reuse and uses an object-oriented approach to match the mental model of real world objects. 
+
+
 
 % The scores do not reflect the overall quality of evaluated toolkits, they just emphasize the support of different requirements.
 

@@ -1,0 +1,68 @@
+%% ------------- Code Listings --------------
+
+% define the program float environment:
+\ifx \undefined \chapter
+   \newfloat{program}{htbp}{lop}
+\else
+   \newfloat{program}{htbp}{lop}[chapter]
+\fi
+\floatname{program}{Listing}
+\floatstyle{plain}
+\restylefloat*{program}
+
+
+\RequirePackage{color}
+\definecolor{lightgray}{gray}{0.9}
+
+\RequirePackage{listings}
+\lstset{
+language=Java,%
+basicstyle=\ttfamily\footnotesize,%
+keywordstyle=,%\ttfamily,%\bfseries,
+identifierstyle=,%\sffamily, %\bfseries
+commentstyle=\normalfont\itshape,%
+stringstyle=\ttfamily,%
+showstringspaces=false,%
+columns = flexible,% fixed, 
+breaklines=true,%
+tabsize=2, %
+backgroundcolor=\color{lightgray},
+xleftmargin=6mm,%
+frame=none,
+framexleftmargin=6mm,
+numbers=left,%
+numbersep=5pt,%
+numberstyle=\normalfont\scriptsize,%
+stepnumber=1,%
+numberfirstline=true,%
+numberblanklines=false,%
+texcl=true,%		%important: read program comments as Latex content
+mathescape=true,
+}
+
+\lstnewenvironment{JavaSourceCode}	% code environment for Java 
+{\lstset{%
+	language=Java,%
+	escapeinside={/+}{+/},% makes "/+" and "+/" available for Latex escapes (labels etc.)
+	}}
+{}
+
+\lstnewenvironment{CSourceCode}	% code environment for C (ANSI)
+{\lstset{%
+	language=[ANSI]C,%
+	escapeinside={/+}{+/},% makes "/+" and "+/" available for Latex escapes (labels etc.)
+	}}
+{}
+
+\lstnewenvironment{CppSourceCode}	% code environment for C++ (ISO)
+{\lstset{%
+	language=[ISO]C++,%
+	escapeinside={/+}{+/},% makes "/+" and "+/" available for Latex escapes (labels etc.)
+	}}
+{}
+
+\lstnewenvironment{LaTeXSourceCode}	% code environment for Latex
+{\lstset{%
+	language=[LaTeX]TeX,%
+	}}
+{}

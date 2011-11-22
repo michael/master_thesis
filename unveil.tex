@@ -56,9 +56,12 @@ Unveil.js advocates a one-way dependency between input data and the resulting ou
 
 With Unveil.js, new visualizations are created by constructing a \texttt{Scene} object.
 
-\begin{verbatim}
+
+\begin{program}
+\begin{CppSourceCode}
 var scene = new uv.Scene();
-\end{verbatim}
+\end{CppSourceCode}
+\end{program}
 
 \subsection{Actors}
 %%%-----------------------------------------------------------------------------
@@ -67,7 +70,9 @@ Once the \texttt{Scene} object is ready, users can start adding \texttt{Actors}.
 
 \SuperPar The following code creates a bar instance, which will eventually be attached to the scene:
 
-\begin{verbatim}
+
+\begin{program}
+\begin{CppSourceCode}
 var bar = new uv.Bar({
   id: 'outer_bar',
   x: 30,
@@ -76,11 +81,14 @@ var bar = new uv.Bar({
   height: 80,
   fillStyle: 'darkblue'
 });
-\end{verbatim}
+\end{CppSourceCode}
+\end{program}
+
 
 \SuperPar Each actor can hold any number of child actors, so another bar will be attached as a child to the parent bar.
 
-\begin{verbatim}
+\begin{program}
+\begin{CppSourceCode}
 bar.add(new uv.Bar({
   id: 'inner_bar',
   x: 50,
@@ -91,7 +99,9 @@ bar.add(new uv.Bar({
 }));
 
 scene.add(bar);
-\end{verbatim}
+\end{CppSourceCode}
+\end{program}
+
 
 \SuperPar The x and y coordinates are relative to the parent object. Thus, an object itself does not know where it is located in the coordinate-space. It just renders itself relative to the position of its parent. The positioning is done through \emph{matrix transformations}, where for each object the current context \emph{transformation matrix} (context) is calculated on every frame, which conforms to the functionality of a \emph{Scene Graph}.
 
@@ -100,7 +110,8 @@ scene.add(bar);
 
 Before a scene can be started, a display (or drawing surface) needs to be specified:
 
-\begin{verbatim}
+\begin{program}
+\begin{CppSourceCode}
 scene.display({
   container: 'plotarea',
   width: 800,
@@ -108,13 +119,18 @@ scene.display({
   zooming: true,
   paning: true
 });
-\end{verbatim}
+\end{CppSourceCode}
+\end{program}
 
 \SuperPar Unveil.js uses an abstract scene (world-coordinates) that can be projected to one or many displays (canvas elements), which have a local coordinate system on their own. Each display can be modified (e.g. zoomed, paned) independently, which conforms to a view transformation in computer game engines (camera analogy). Once a display is set up, scenes can be started by calling the \texttt{start()} method.
 
-\begin{verbatim}
+
+\begin{program}
+\begin{CppSourceCode}
 scene.start();
-\end{verbatim}
+\end{CppSourceCode}
+\end{program}
+
 
 \SuperPar The scene automatically refreshes attached displays appropriately (on every frame), which implies that performance may decrease if multiple output displays are used.
 
@@ -125,7 +141,8 @@ In addition to pre-implemented Actor types, users are encouraged to implement th
 
 \SuperPar In order to illustrate this, here is how the Bar Actor is implemented:
 
-\begin{verbatim}
+\begin{program}
+\begin{CppSourceCode}
 uv.Bar = function(properties) {
   uv.Actor.call(this, _.extend({
     width: 30,
@@ -137,15 +154,18 @@ uv.Bar = function(properties) {
 };
 
 uv.Bar.prototype = Object.extend(uv.Actor);
-\end{verbatim}
+\end{CppSourceCode}
+\end{program}
 
-\SuperPar Every actor inherits from \texttt{uv.Actor} and defines its own properties. In the case of \texttt{uv.Bar}, there is \texttt{width}, \texttt{height}, \texttt{strokeWeight}, \texttt{strokeStyle}, etc. Each Actor needs to know how it can draw itself. This is specified by the draw method that sticks on the Actor's prototype.
+\SuperPar Every Actor inherits from \texttt{uv.Actor} and defines its own properties. In the case of \texttt{uv.Bar}, there is \texttt{width}, \texttt{height}, \texttt{strokeWeight}, \texttt{strokeStyle}, etc. Each Actor needs to know how it can draw itself. This is specified by the \texttt{draw} method that sticks on the Actor's prototype.
 
-\begin{verbatim}
+\begin{program}
+\begin{CppSourceCode}
 uv.Bar.prototype.draw = function(ctx) {
   ctx.fillRect(0, 0, this.p('width'), this.p('height'));
 };
-\end{verbatim}
+\end{CppSourceCode}
+\end{program}
 
 \SuperPar Actors can not only form graphical objects but carry some state (e.g. domain data or user input) which is stored within the object. Such higher level objects can encapsulate behavior (like interactivity or animation) as well.
 
@@ -155,21 +175,26 @@ uv.Bar.prototype.draw = function(ctx) {
 
 Interaction is a key-feature of modern visualizations. Therefore, Unveil.js aims to provide an abstraction for implementing interaction on Actors. Unlike in SVG, Canvas API users cannot attach event handlers to shapes directly. Instead, users need to detect on their own, i.e. which objects are currently under the cursor. Usually this is done by employing some math, but there is a simpler approach that utilizes the \texttt{isPointInPath()} method provided by the Canvas API. With \texttt{isPointInPath()}, users can check if the current mouse-position is inside the current working path. To support interaction, Unveil.js requires Actors to be equipped with an additional \texttt{drawMask()} method.
 
-\begin{verbatim}
+
+\begin{program}
+\begin{CppSourceCode}
 uv.Bar.prototype.drawMask = function(ctx) {
   ctx.beginPath();
-  
+
   ctx.moveTo(0, 0);
   ctx.lineTo(this.properties.width, 0);
   ctx.lineTo(this.properties.width, this.properties.height);
   ctx.lineTo(0, this.properties.height);
   ctx.lineTo(0, 0);
 };
-\end{verbatim}
+\end{CppSourceCode}
+\end{program}
 
 \SuperPar This simply draws an invisible rectangle. If there are more complex objects, e.g. star-shapes, a rectangle (also known as a bounding-box) can be used as well to add interaction-awareness. All Actors that have a \texttt{drawMask()} implementation can be easily checked against the current cursor position. For completeness, here is the corresponding code that is used internally to perform the actual hit testing.
 
-\begin{verbatim}
+
+\begin{program}
+\begin{CppSourceCode}
 uv.Actor.prototype.checkActive = function(ctx, mouseX, mouseY) {
   if (this.drawMask && ctx.isPointInPath) {
     this.drawMask(ctx);
@@ -179,7 +204,9 @@ uv.Actor.prototype.checkActive = function(ctx, mouseX, mouseY) {
       this.active = false;
   }
 };
-\end{verbatim}
+\end{CppSourceCode}
+\end{program}
+
 
 
 \subsection{Event Handlers}
@@ -187,11 +214,13 @@ uv.Actor.prototype.checkActive = function(ctx, mouseX, mouseY) {
 
 Given that interaction is supported for a certain actor, users are able to bind event handlers to certain events.
 
-\begin{verbatim}
+\begin{program}
+\begin{CppSourceCode}
 scene.get('inner_bar').bind('mouseover', function() {
   this.p('fillStyle', 'red');
 });
-\end{verbatim}
+\end{CppSourceCode}
+\end{program}
 
 \SuperPar This example causes the inner bar to be colored red when the user's mouse cursor enters the object.
 
@@ -202,11 +231,14 @@ Properties can not only takes values but also functions. During rendering, these
 
 \SuperPar Instead of specifying a mouseover handler to highlight certain objects, one could also use a dynamic property.
 
-\begin{verbatim}
+
+\begin{program}
+\begin{CppSourceCode}
 scene.get('inner_bar').p('fillStyle', function() {
   return this.active ? 'red' : 'darkblue';
 });
-\end{verbatim}
+\end{CppSourceCode}
+\end{program}
 
 
 \subsection{Animation}
@@ -217,9 +249,13 @@ In the context of Information Visualization, animation is often utilized in conj
 
 Based on new data, a visualization might assign new values to graphical objects, but wants to have this value interpolated over time, from the old value to the new value. Unveil.js users can call the \texttt{animate} method on Actors for that. The first parameter is a hash that contains the new property values. The second parameter determines the animation's duration, whereas the third parameter is optional and can be used to specify an easing function, which should be used for interpolation.
 
-\begin{verbatim}
+
+\begin{program}
+\begin{CppSourceCode}
 bar.animate({height: 50}, 2.5, uv.Tween.Easing.Expo.EaseInOut);
-\end{verbatim}
+\end{CppSourceCode}
+\end{program}
+
 
 % Rendering depends on the current visualization state. As soon as interaction takes place or an animation gets started, subsequent re-renders get triggered automatically.
 
@@ -235,7 +271,8 @@ While most often specifying properties (x, y, scaleX, scaleY, rotation) on the A
 
 \SuperPar For example, to scale and rotate around a given point in the coordinate system, a series of matrix transforms can be specified.
 
-\begin{verbatim}
+\begin{program}
+\begin{CppSourceCode}
 var b = new uv.Bar({...});
 // move the coordinate system to the desired point
 b.translate(40,40);
@@ -245,7 +282,8 @@ b.scale(1.5, 1.5);
 b.rotate(Math.PI/4);
 // move the coordinate system back
 b.translate(-40, -40);
-\end{verbatim}
+\end{CppSourceCode}
+\end{program}
 
 \SuperPar To calculate the resulting transformation matrix for drawing, it is initialized with the values of the specified properties and then multiplied with
 the modification matrix.
@@ -258,7 +296,8 @@ Unveil.js was built with a very data-centric approach in mind, offering a number
 
 Here is an example of a \texttt{Data.Collection} containing real-world data about countries.
 
-\begin{verbatim}
+\begin{program}
+\begin{CppSourceCode}
 var countries_data = {
   "properties": {
     "name": {"name": "Country Name",
@@ -291,40 +330,50 @@ var countries_data = {
     }
   }
 };
-\end{verbatim}
+\end{CppSourceCode}
+\end{program}
 
 \SuperPar The collection shown above not only holds data for certain countries, but also contains meta-information, expressed as properties. As described in Chapter~\ref{cha:web_based_visualization}, this can be particularly useful for analytical and exploratory visualization tools. 
 
-\begin{verbatim}
+\begin{program}
+\begin{CppSourceCode}
 languages.at(0).get('name'); // => "German"
 languages.at(0).get('population') // => 90418900
 languages.at(1).get('population') // => 310955497 for "English"
-\end{verbatim}
+\end{CppSourceCode}
+\end{program}
 
 \subsection{Property Inspection}
 %%%-----------------------------------------------------------------------------
 
 Using the Property Inspection API, users can ask a certain property about its type, a human readable name or if it is unique (holding just one value) or not (holding a list of values).
 
-\begin{verbatim}
+\begin{program}
+\begin{CppSourceCode}
 countries.properties().get('population').type; // => 'number'
 countries.properties().get('population').unique; // => false
 countries.properties().get('population').name; // => 'Population'
-\end{verbatim}
+\end{CppSourceCode}
+\end{program}
+
 
 \subsection{Aggregation}
 %%%-----------------------------------------------------------------------------
 
 Presumed that a user is interested in the populations grouped by language, the \texttt{Data.Collection.group()} method can be utilized. In order to aggregate the values of population, an aggregator function such as \texttt{Data.Aggregators.SUM} can be used.
 
-\begin{verbatim}
+
+\begin{program}
+\begin{CppSourceCode}
 var languages = countries.group(["official_language"], {
   "population": {
     aggregator: Data.Aggregators.SUM, 
     name: "Total Population"
   }
 });
-\end{verbatim}
+\end{CppSourceCode}
+\end{program}
+
 
 \section{A Data-driven Bar Chart}
 %%%-----------------------------------------------------------------------------
@@ -333,18 +382,27 @@ In the following example, some real world domain data is used, namely countries 
 
 \SuperPar The countries example from Section~\ref{cha:dataabstractions} will be used as a data-source.
 
-\begin{verbatim}
+
+\begin{program}
+\begin{CppSourceCode}
 var countries = new Data.Collection(countries_data);
-\end{verbatim}
+\end{CppSourceCode}
+\end{program}
+
 
 \SuperPar The property that should be visually encoded is determined by the user using a select-box control. The HTML generated looks as follows:
 
+\begin{program}
+\begin{CppSourceCode}
 \begin{verbatim}
 <select id="property">
   <option value="population">Population</option>
   <option value="gdp">GDP per capita</option>
 </select>
 \end{verbatim}
+\end{CppSourceCode}
+\end{program}
+
 
 \begin{figure}
 \centering
@@ -355,7 +413,8 @@ var countries = new Data.Collection(countries_data);
 
 \SuperPar Furthermore, a Scene object is created complete with a specified output display:
 
-\begin{verbatim}
+\begin{program}
+\begin{CppSourceCode}
 var scene = new uv.Scene({
   displays: [{
     container: 'canvas',
@@ -363,82 +422,95 @@ var scene = new uv.Scene({
     height: 300
   }]
 });
-\end{verbatim}
+\end{CppSourceCode}
+\end{program}
+
 
 \SuperPar In order to guarantee that the bars fit on the available screen space, they need to be normalized accordingly. The function shown below maps values from an input domain (real numbers) to an output range (pixels).
 
-\begin{verbatim}
+
+\begin{program}
+\begin{CppSourceCode}
 function y(val) {
   var dMax = countries.properties().get(property)
               .aggregate(Data.Aggregators.MAX),
       oMax = 200;
   return parseInt(val/dMax * oMax);
 }
-\end{verbatim}
-
+\end{CppSourceCode}
+\end{program}
 
 \SuperPar The scene will be initialized by adding a bar per data element in the collection. The height property encodes the value of the property under investigation.
 
-\begin{verbatim}  
-countries.items().each(function(c, key, index) {
-  scene.add({
-    id: "country_"+key,
-    type: 'rect',
-    x: 50+35*index,
-    y: 280,
-    width: 30,
-    height: -parseInt(y(c.get(property)), 10),
-    fillStyle: function() {
-      return this.active ? 'orange' : 'blue'; 
-    },
-    interactive: true,
-    actors: [
-      {
-        type: 'label',
-        x: 15,
-        y: 20,
-        width: 30,
-        height: 20,
-        text: function() { return c._id.toUpperCase() },
-        textAlign: 'center',
-        fillStyle: '#444'
-      }
-    ]
-  });
-});
-\end{verbatim}
+% \begin{program}
+% \begin{CppSourceCode}
+% countries.items().each(function(c, key, index) {
+%   scene.add({
+%     id: "country_"+key,
+%     type: 'rect',
+%     x: 50+35*index,
+%     y: 280,
+%     width: 30,
+%     height: -parseInt(y(c.get(property)), 10),
+%     fillStyle: function() {
+%       return this.active ? 'orange' : 'blue'; 
+%     },
+%     interactive: true,
+%     actors: [
+%       {
+%         type: 'label',
+%         x: 15,
+%         y: 20,
+%         width: 30,
+%         height: 20,
+%         text: function() { return c._id.toUpperCase() },
+%         textAlign: 'center',
+%         fillStyle: '#444'
+%       }
+%     ]
+%   });
+% });
+% \end{CppSourceCode}
+% \end{program}
+
 
 \SuperPar Additionally, the visualization should allow dynamic switching between properties. For that purpose, property inspection features provided by Data.js are used to find out which numeric properties are available for the collection. By doing so, the visualization can be used with arbitrary collections, even if their structure differs.
 
-\begin{verbatim}
-countries.properties().each(function(p) {
-  if (p.type === "number" && p.unique) {
-    var option = $('<option value="'+p.key+'">'+p.name+'</option>');
-    $('#property').append(option);
-  }
-});
-\end{verbatim}
+% \begin{program}
+% \begin{CppSourceCode}
+% countries.properties().each(function(p) {
+%   if (p.type === "number" && p.unique) {
+%     var option = $('<option value="'+p.key+'">'+p.name+'</option>');
+%     $('#property').append(option);
+%   }
+% });
+% \end{CppSourceCode}
+% \end{program}
 
 \SuperPar Every time the user selects a property, the bars need to be updated accordingly. In an event handler we are using the \texttt{animate()} method to specify an animated transition of the bar's height.
 
-\begin{verbatim}
+
+\begin{program}[h!]
+\begin{CppSourceCode}
 function update() {
-  property = $('#property').val();
+  property = ('#property').val();
   countries.items().each(function(c, key, index) {
     scene.get("country_"+key).animate({
       height: -parseInt(y(c.get(property)), 10)
     }, 1.0);
   });
 }
-$('#property').change(update);
-\end{verbatim}
+('#property').change(update);
+\end{CppSourceCode}
+\end{program}
 
 \SuperPar Finally, the scene can be started.
 
-\begin{verbatim}
-scene.start();
-\end{verbatim}
-
+\begin{program}[h!]
+\begin{CppSourceCode}
+scene.start();  
+\end{CppSourceCode}
+\end{program}
 
 \section{Example Applications}
 %%%-----------------------------------------------------------------------------
