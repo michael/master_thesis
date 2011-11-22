@@ -1,0 +1,70 @@
+\begin{english}
+
+\chapter{Requirements for a Web-based Visualization Toolkit}
+\label{cha:requirements}
+
+This section is dedicated to examine what makes a good visualization toolkit. Based on the current state of technology and relevant literature, a set of requirements is identified. The results are taken for the design goals of Unveil.js, the author's attempt to create a visualization toolkit on top of the HTML5 Canvas API.
+
+\section{Declarative Language Design}
+%%%-----------------------------------------------------------------------------
+
+The utilization of declarative languages often simplifies programming tasks, which is especially useful for information designers. The idea of declarative languages is that users specify \emph{what} the results of a computation should be rather than \emph{how} the results should be computed. This typically comes along with separating \emph{specification} from \emph{implementation}, which is helpful for language users to focus on their domain-specific application characteristics, while freeing language developers to optimize internal processing~\cite{DeclarativeLD10}. Heer and Bostock name HTML and CSS as very successful representatives of declarative languages as they have enabled millions of novice programmers to develop web-pages. The database query language SQL is another example for utilizing declarative specification to hide the complexity of internals from the user.
+
+According to Heer and Bostock, most existing Information Visualization Toolkits adhere to an imperative programming model which requires visualization design in order to contend with software engineering concerns. Contemporary visualization design tools must deal with an increasing heterogeneity of hardware and interactive devices~\cite{DeclarativeLD10}. Ideally, they should support interfaces ranging from traditional desktop applications to browser based web-clients and multi-touch mobile devices. Furthermore, Visualization Toolkits with the purpose of providing a level of abstraction should be able to benefit from hardware advances without the need of changing the public interface that users interact with. By separating \emph{specification} from \emph{implementation}, deployment across heterogeneous platforms becomes possible. This approach forms an efficient alternative to creating a specialized visualization framework for each newly introduced hardware platform.
+
+Protovis, an embedded domain specific language (DSL) for web-based visualizations, demonstrates that a declarative language can simplify visualization specification~\cite{Protovis09}.
+
+
+\section{Cross-platform Deployment}
+%%%-----------------------------------------------------------------------------
+
+One could argue that the web by itself is a cross-platform deployment facility. This is not true, since the implementations of browsers differ. There are multiple options (platforms) to choose from~\cite{DeclarativeLD10}. For the rendering stage, a visualization toolkit could either make use of SVG or HTML5 Canvas. In general, all these technologies can be seen as a work in progress, since new features (sometimes considered experimental, such as hardware acceleration, parallel execution) are introduced continuously. Existing API's such as SVG or HTML5 Canvas are improved on a regular basis. In the future there may be additional options for browser-based rendering. A 3D-context for the Canvas API  is already available, including with hardware acceleration. This technology, referred to as WebGL, is already implemented in browsers like Google Chrome or Mozilla Firefox. Also, in many cases users may want to run their visualization on desktop-based environments as well, ideally without additional specification effort. If toolkits are designed to separate \emph{specification} from \emph{execution}, language designers can immediately add support for new features which are offered by continuously improving browsers.
+
+\section{Optimization}
+%%%-----------------------------------------------------------------------------
+
+As Heer and Bostock~\cite{DeclarativeLD10} state, by decoupling \emph{specification} from \emph{implementation} language optimizations can be done without interfering with the work of designers. For a Visualization Toolkit that follows declarative language design idioms, there are various parts involved, all of which can be optimized independently. These are \emph{runtime compilation} of visualization specifications, \emph{evaluation} and \emph{rendering}. As for rendering, using hardware accelerated graphics usually results in a significant increase in performance.
+
+
+
+\section{Data Representation and Transformation}
+%%%-----------------------------------------------------------------------------
+
+With respect to Information Visualization, the availability of dedicated data processing frameworks is very important. According to Thomas and Cook~\cite{IlluminatingThePath05}, such frameworks should simplify the task of dealing with domain data and support many dimensions, multi valued properties for both ordinal values (categorical data) and numeric values as well as object values to model complex relationships.
+
+Data processing frameworks are often included in Visualization Toolkits. Google's \texttt{DataTable}, which is part of their Visualization API\footnote{http://code.google.com/apis/chart/interactive/docs/reference.html}, is an example of such a framework. A \texttt{DataTable} represents a two-dimensional, mutable table of values. For data transformations, users can employ a \texttt{DataView} to make a read-only copy of a \texttt{DataTable}. A \texttt{DataView} may contain a filtered sub-set of the original values, rows and columns. Also grouping operations are possible, where a table of rows can be grouped by specified column values. Values of other columns can be aggregated through aggregator functions such as \texttt{google.visualization.data.max}.
+
+Web-based visualizations should be able to consume live data. Thus, suitable abstract representations for domain data are needed in order to separate data from the visual representation. There is a trend towards data-driven visualizations which do not only use raw data but also meta-information (describing the structure of a dataset). This meta-information can be used to adjust the visual representation based on it. It enables the creation of flexible visualizations, supporting a range of diverging domain data and cover multiple use-cases, which is especially important for the field of Visual Analytics.
+
+
+\section{Object-oriented Composition}
+%%%-----------------------------------------------------------------------------
+
+% citation needed
+
+Employing object-oriented design is especially helpful for composing visualizations. Composition can be seen as the task of \emph{assembling  lower-level objects} (marks) to \emph{higher level compound objects}. Object-oriented design is perfectly suitable for tasks that involve graphics. A visualization can be seen as a \emph{composition of graphical objects}, which are arranged according to the underlying data-items. In a visualization scenario, graphical objects (e.g. the dots of a scatterplot) correspond to real-world objects (e.g. each dot depicts a country). Visualization toolkits should therefore encourage object-oriented thinking, as this helps much during the design process.
+
+
+\section{Interaction}
+%%%-----------------------------------------------------------------------------
+
+According to Spence~\cite{InformationVisualization07}, interaction forms the heart of modern Information Visualization. It enables users to view the corpus of data from different angles. This is needed, since the whole dataset cannot be viewed at once. A visualization toolkit, therefore, needs to have first-class interaction support. This involves specifying behavior which should be executed on certain events. For example, if a user clicks on a particular object the graphical representation should change accordingly (e.g. fade in some details related to the selected object).
+
+\section{Animation}
+%%%-----------------------------------------------------------------------------
+
+Since interaction triggers changes to the graphical display, it is important to emphasize the \emph{transition from the old state to the new one}. This is where animation comes into play in order to support smooth transitions that help users to understand what is actually changing. Comprehensive support for animation, thus, is an important requirement for visualization toolkits. They should provide a simple interface for specifying animation behavior and provide means to change the attributes (delay, duration, easing method) of motion tweens.
+
+
+\section{Extensibility}
+%%%-----------------------------------------------------------------------------
+
+In order to support a broad range of use-cases without bloating the core library, Visualization Toolkits should feature a concept for modularization. \emph{Separation of concerns} is important in order to manage the complexity for elaborate visualization tasks. Users of a library, which form a community, should be able to design and maintain independent modules that can easily be reused by others. But not only modularization is important. The possibility of adjusting the library, such as changing the behavior of certain parts as well as extending utility methods, can be of great value.
+
+
+\section{Summary}
+%%%-----------------------------------------------------------------------------
+
+Based on the question what makes a good visualization toolkit, a set of requirements, crucial for the quality of a visualization toolkit, have been identified. In Chapter~\ref{cha:evaluation} the quality of selected toolkits is examined based on these requirements.
+
+\end{english}

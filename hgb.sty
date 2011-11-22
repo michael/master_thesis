@@ -1,0 +1,509 @@
+%% hgb.sty
+%% Autor: Wilhelm Burger (wilhelm.burger@fh-hagenberg.at)
+%% Diese Datei ist Teil des hagenberg-Package zur Erstellung von 
+%% Bachelor- und Diplomarbeiten.
+
+\NeedsTeXFormat{LaTeX2e}
+\newcommand{\hgbDate}{2010/06/23}			%Versionsdatum
+\ProvidesPackage{hgb}[\hgbDate]
+
+% options german/english are passed from the class file
+\DeclareOption{english}{\providecommand{\hgb@MainLanguage}{english}}
+\DeclareOption{german}{\providecommand{\hgb@MainLanguage}{german}}
+\ProcessOptions\relax
+
+
+%% ------ Shadowing conflicting symbols from other packages -------
+
+% Macros for resolving name conflicts (from symbols.tex by Scott Pakin):
+% There are a number of symbols (e.g., \Square) that are defined by      %
+% multiple packages.  In order to typeset all the variants in this       %
+% document, we have to give glyph a unique name.  To do that, we define  %
+% \savesymbol{XXX}, which renames a symbol from \XXX to \origXXX, and    %
+% \restoresymbol{yyy}{XXX}, which renames \origXXX back to \XXX and     %
+% defines a new command, \yyyXXX, which corresponds to the most recently %
+% loaded version of \XXX.   
+% Wilbur: modified to use "orig@" instead of "orig" (not visible to users)
+
+% Save a symbol that we know is going to get redefined.
+\def\@savesymbol#1{%
+  \expandafter\let\expandafter\origsym\expandafter=\csname#1\endcsname
+  \expandafter\let\csname orig@#1\endcsname=\origsym
+  \expandafter\let\csname#1\endcsname=\relax
+}
+
+% Restore a previously saved symbol, and rename the current one.
+\def\@restoresymbol#1#2{%
+  \expandafter\let\expandafter\newsym\expandafter=\csname#2\endcsname
+  \expandafter\global\expandafter\let\csname#1#2\endcsname=\newsym
+  \expandafter\let\expandafter\origsym\expandafter=\csname orig@#2\endcsname
+  \expandafter\global\expandafter\let\csname#2\endcsname=\origsym
+}
+
+% example:
+%\@savesymbol{EUR}	% shadows \EUR command defined in eurosym-Package
+%\RequirePackage{marvosym} % package defines \EUR again
+%\@restoresymbol{eurosim}{EUR}	%original \EUR is now available as \eurosimEUR
+
+%% ------------------ Required Packages ----------------------
+
+\RequirePackage[latin1]{inputenc} 
+% T1-Fonts zur besseren Silbentrennung bei Umlauten etc.,
+% verwendet automatisch die cm-super Type1 Postscript Schriften 
+% (in MikTeX ab 2.4 installiert):
+\RequirePackage[T1]{fontenc}
+
+\RequirePackage{ifthen}
+\RequirePackage[english,german,ngerman]{babel}
+
+\RequirePackage{eurosym} % provides \euro - conflict with marvosym on \EUR!
+%\RequirePackage{marvosym} % provides \EUR and other unusual symbols!
+%\@ifundefined{euro}%
+%   {\newcommand*{\euro}{\EUR}}%
+%	 {}
+
+\@ifundefined{hgb@MainLanguage}%
+   {\newcommand*{\hgb@MainLanguage}{german}}%
+	 {}
+
+% Hauptsprache einstellen (babel):
+\ifthenelse{\equal{\hgb@MainLanguage}{german}}%
+	{\main@language{ngerman}}{}
+\ifthenelse{\equal{\hgb@MainLanguage}{english}}%
+	{\main@language{english}}{}
+	
+\RequirePackage[fixlanguage]{babelbib}
+
+\RequirePackage[dvips]{graphicx} % zur Einbindung von EPS-Grafiken
+
+\RequirePackage[T1,hyphens,obeyspaces,spaces]{url}
+\urlstyle{sf}
+
+\RequirePackage{verbatim}
+\RequirePackage{moreverb}
+\def\verbatimtabsize{2\relax}
+
+%\RequirePackage[noadjust]{cite} % vermeidet zusätzliches Spacing vor [..]
+
+\RequirePackage{float}
+%\floatplacement{figure}{tbp}
+%\floatplacement{table}{tbp}
+\floatstyle{plain}
+
+
+% Captions mit Fontgroesse "small" und Abstand vom Seitenrand
+\RequirePackage[small,bf]{caption}
+\setlength{\captionmargin}{5mm}
+\setlength{\abovecaptionskip}{10pt}
+\setlength{\belowcaptionskip}{10pt}
+
+%\RequirePackage[small,rm,loose]{subfigure}
+%\setlength{\subfigtopskip}{7pt}
+%\setlength{\subfigcapskip}{7pt}
+%\setlength{\subfigcaptopadj}{0pt} 
+%\setlength{\subfigbottomskip}{-3pt}
+%\setlength{\subfigcapmargin}{0pt} 
+%\setlength{\subfiglabelskip}{0.33em plus 0.07em minus 0.03em}
+
+\RequirePackage{exscale}
+% Skaliert Mathe-Modus Ausgaben in allen Umgebungen richtig.
+
+\RequirePackage{upquote}
+% Setzt "richtige" Quotes in verbatim-Umgebung
+
+\RequirePackage{psfrag}
+
+% AMS-Math für mathematischen Schriftsatz
+\RequirePackage{amsmath}
+\RequirePackage{amsfonts}
+\RequirePackage{amsbsy}
+
+%% ---------------------- Environments -------------------------
+
+%\newenvironment{sourcecode}%
+%{\begin{minipage}{0.95\textwidth}%
+%   \hrule%
+%   \bigskip%
+%   \begin{footnotesize}%
+%}%
+%{\end{footnotesize}
+%   \hrule\end{minipage}%
+%}
+
+% Umschalten von Deutsch auf Englisch (babel)
+\newenvironment{english}%
+{\begin{otherlanguage}{english}}%
+{\end{otherlanguage}}
+
+\newenvironment{german}%
+{\begin{otherlanguage}{ngerman}}%
+{\end{otherlanguage}}
+
+
+%% --------------------- Makros --------------------------------
+
+%\newcommand{\latex}{{\rm \LaTeX}\xspace} % aus Bequemlichkeit
+%\newcommand{\latex}{{\sl La\-TeX}\xspace} % kein schnoerkeliges LaTeX mehr
+\newcommand{\latex}{La\-TeX\xspace} % kein schnoerkeliges LaTeX mehr
+
+%\newcommand{\tex}{{\sl TeX}\xspace}     % kein schnoerkeliges TeX mehr
+\newcommand{\tex}{TeX\xspace}     % kein schnoerkeliges TeX mehr
+
+%\newcommand{\bs}{\char '134} % Backslash character
+\newcommand{\bs}{\textbackslash} % Backslash character
+
+%inline fractions
+\def\fraction#1/#2{\leavevmode\kern.0em
+  \raise.5ex\hbox{\the\scriptfont0 #1}\kern-.1em
+  /\kern-.15em\lower.25ex\hbox{\the\scriptfont0 #2}}
+
+\newcommand\trennstrich{%
+  \nopagebreak[4]
+  \vskip 1.5ex %
+%  \nopagebreak[4]
+  \noindent\makebox[\textwidth]{\rule{4cm}{0.4pt}}
+  \vskip 2.5ex}
+  
+%Div. Abkürzungen (in Anlehnung an Jochen Küpper, jkthesis):
+%\usepackage{xspace}
+\RequirePackage{xspace}
+
+\newcommand{\bzgl}{bzgl.\@\xspace}
+\newcommand{\bzw}{bzw.\@\xspace}
+\newcommand{\ca}{ca.\@\xspace}
+\newcommand{\dah}{d.\thinspace{}h.\@\xspace}
+\newcommand{\Dah}{D.\thinspace{}h.\@\xspace}
+\newcommand{\ds}{d.\thinspace{}sind\@\xspace}
+\newcommand{\evtl}{evtl.\@\xspace}
+\newcommand{\ia}{i.\thinspace{}Allg.\@\xspace}
+\newcommand{\sa}{s.\ auch\@\xspace}
+\newcommand{\so}{s.\ oben\xspace}
+\newcommand{\su}{s.\ unten\@\xspace}
+
+\newcommand{\ua}{u.\thinspace{}a.\@\xspace}
+\newcommand{\Ua}{U.\thinspace{}a.\@\xspace}
+\newcommand{\uae}{u.\thinspace{}Ä.\@\xspace}
+\newcommand{\usw}{usw.\@\xspace}
+\newcommand{\uva}{u.\thinspace{}v.\thinspace{}a.\@\xspace}
+\newcommand{\uvm}{u.\thinspace{}v.\thinspace{}m.\@\xspace}
+\newcommand{\va}{vor allem\@\xspace}
+\newcommand{\vgl}{vgl.\@\xspace}
+\newcommand{\zB}{z.\thinspace{}B.\@\xspace}
+\newcommand{\ZB}{Zum Beispiel\xspace}
+
+%Zeichen fuer die reellen, komplexen ... Zahlen (AMS Blackboard)
+%\RequirePackage{amsfonts}
+%\RequirePackage{amsbsy}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+
+%Messbox zur Druckkontrolle:
+\newcommand{\Messbox}[2]{% Parameters: #1=Breite, #2=Hoehe
+\setlength{\unitlength}{1.0mm}%
+\begin{picture}(#1,#2)%
+\linethickness{0.05mm}%
+\put(0,0){\dashbox{0.2}(#1,#2)%
+{\parbox{#1mm}{%
+\centering\footnotesize 
+%{\bf MESSBOX}\\ 
+Breite $ = #1 {\rm\ mm}$\\
+H\"ohe $ = #2 {\rm\ mm}$
+}}}\end{picture}
+}
+
+%% ------------- Einstellungen fuer's Layout --------------
+
+%\nonfrenchspacing    % erzeugt breitere Abstände zwischen Sätzen
+\frenchspacing     	  % erzeugt normale Abstände zwischen Sätzen
+%\pagestyle{headings}  % Normale Kopfzeilen
+
+%% div. Parameter: nur dann ändern, wenn man genau weiss was man tut!
+%\setlength{\hoffset}{-1in}
+%\setlength{\voffset}{-1in}
+%\setlength{\oddsidemargin}{3cm}
+%\setlength{\evensidemargin}{2.5cm}
+%\setlength{\textwidth}{15.5cm}
+%\setlength{\textheight}{22.8cm}
+%\setlength{\topmargin}{2.54cm}
+%\setlength{\headheight}{1ex}
+%\setlength{\headsep}{1cm}
+%\parindent0pt
+%\parskip1.5ex plus0.5ex minus0.5ex % flexibler Absatzabstand
+
+% Make float placement easier    
+\renewcommand{\floatpagefraction}{.9}  % vorher: .5
+\renewcommand{\textfraction}{.01}      % vorher: .2
+\renewcommand{\topfraction}{.9}        % vorher: .7
+\renewcommand{\bottomfraction}{.7}     % vorher: .3
+\setcounter{topnumber}{3}              % vorher: 2
+\setcounter{bottomnumber}{2}           % vorher: 1
+\setcounter{totalnumber}{5}            % vorher: 3
+
+%% ------------- Math Stuff --------------
+%% Problem mit Satzzeichen im Math-Modus!
+%% Verwende Komma (statt Punkt) als Trennzeichen in Dezimalzahlen 
+%\DeclareMathSymbol{,}{\mathpunct}{letters}{"3B}
+%\DeclareMathSymbol{.}{\mathord}{letters}{"3B}
+%\DeclareMathSymbol{\decimal}{\mathord}{letters}{"3A}
+
+%% ------------- Algorithms Stuff ---------
+
+% 'algorithm' liefert die Float-Umgebung für Algorithmen (\begin{algorithm}...)
+\@ifundefined{chapter}%
+  {\RequirePackage[ruled]{algorithm}}%
+	{\RequirePackage[ruled,chapter]{algorithm}}
+
+%\floatname{algorithm}{Algorithmus}
+%\DeclareCaptionLabelSeparator{colon}{: } % Anpassung an den standard caption style
+\DeclareCaptionStyle{ruled}{labelfont=bf,labelsep=colon} 
+
+% 'algorithmicx' liefert das Innere der Algorithmen (\begin{algorithmic}[1]...)
+\RequirePackage{algorithmicx}
+\RequirePackage{algpseudocode}
+\algsetlanguage{pseudocode}
+\renewcommand{\algorithmicprocedure}{} % use no 'Procedure' keyword
+
+
+
+%% ------------- Program environment / code listings --------------
+
+% define the program float environment:
+\@ifundefined{chapter}%
+   {\newfloat{program}{tbp}{lop}}%
+	 {\newfloat{program}{tbp}{lop}[chapter]}
+%\floatname{program}{Programm}
+%\floatname{program}{\@ProgramName}
+\floatstyle{plain}
+\restylefloat*{program}
+	
+\ifthenelse{\equal{\bbl@main@language}{german} \or \equal{\bbl@main@language}{ngerman}}%
+{	\floatname{program}{Programm}
+  \floatname{algorithm}{Algorithmus}
+}{}
+
+\ifthenelse{\equal{\bbl@main@language}{english}}%
+{	\floatname{program}{Program}
+  \floatname{algorithm}{Algorithm}
+}{}
+
+
+\RequirePackage{color}
+\definecolor{lightgray}{gray}{0.9}
+\color{black}
+\newcommand{\@MissingArg}[1]{\textcolor{red}{#1}}
+
+\RequirePackage{listings}
+\lstset{
+%language=Java,%
+basicstyle=\ttfamily\footnotesize,%
+keywordstyle=,%\ttfamily,%\bfseries,
+identifierstyle=,%\sffamily, %\bfseries
+commentstyle=\normalfont\itshape,%
+stringstyle=\ttfamily,%
+showstringspaces=false,%
+columns = flexible,% fixed, 
+breaklines=true,%
+tabsize=2, %
+backgroundcolor=\color{lightgray},
+xleftmargin=6mm,%
+frame=none,
+framexleftmargin=6mm,
+numbers=left,%
+numbersep=5pt,%
+numberstyle=\normalfont\scriptsize,%
+stepnumber=1,%
+numberfirstline=true,%
+numberblanklines=true,%
+texcl=true,%		%important: read program comments as Latex content
+mathescape=false,	%set false by default?
+upquote=true,%
+keepspaces=true,%
+}
+
+\lstnewenvironment{JavaCode}	% code environment for Java 
+{\lstset{%
+	language=Java,%
+	escapeinside={/+}{+/},% makes "/+" and "+/" available for Latex escapes (labels etc.)
+	}}
+{}
+
+\lstnewenvironment{CCode}	% code environment for C (ANSI)
+{\lstset{%
+	language=[ANSI]C,%
+	escapeinside={/+}{+/},% makes "/+" and "+/" available for Latex escapes (labels etc.)
+	}}
+{}
+
+\lstnewenvironment{CppCode}	% code environment for C++ (ISO)
+{\lstset{%
+	language=[ISO]C++,%
+	escapeinside={/+}{+/},% makes "/+" and "+/" available for Latex escapes (labels etc.)
+	}}
+{}
+
+\lstnewenvironment{PhpCode}
+{\lstset{%
+  language=PHP,%
+%  mathescape=false,
+  escapeinside={/+}{+/}}}%
+{}
+
+
+\lstnewenvironment{LaTeXCode}	% code environment for Latex
+{\lstset{%
+	language=[LaTeX]TeX,%
+	commentstyle={},%
+	texcl=false,%
+	escapechar={},%
+%	escapeinside={},%
+	escapeinside={/+}{+/}%
+%	mathescape=false,
+	}}
+{}
+
+\lstnewenvironment{GenericCode}	% generic code environment
+{\lstset{%
+	language={},%
+	keepspaces=true,%
+	commentstyle={},%
+	texcl=false,%
+	escapechar={},%
+	escapeinside={},%
+%	mathescape=false,
+	}}
+{}
+
+%% ------------- Experimental --------------
+
+\newenvironment{NarrowList}%
+{\begin{list}{}%
+{\setlength{\leftmargin}{2.5em}
+ \setlength{\labelwidth}{1em}
+ \setlength{\labelsep}{0.5em}
+ \setlength{\itemsep}{0.5ex}
+ \setlength{\parsep}{0ex}
+ \setlength{\topsep}{0ex}
+\raggedright
+}}%
+{\end{list}}
+
+\newenvironment{FileList}[1]%
+{\paragraph{Pfad:} \url{#1}
+ \begin{list}{}%
+{\setlength{\leftmargin}{5cm}
+ \setlength{\labelwidth}{4cm}
+ \setlength{\labelsep}{0.25cm}
+ \setlength{\rightmargin}{0cm}
+ \setlength{\itemindent}{0cm}
+ \setlength{\itemsep}{0.5ex}
+ \setlength{\parsep}{0ex}
+ \setlength{\topsep}{1ex}
+\raggedright
+}}%
+{\end{list}}
+
+\def\widedotfill{\leaders\hbox to 8pt{\hfil.\hfil}\hfill}
+
+\newcommand{\fitem}[1]{%
+%\item[\url{#1}\hfill]
+%\item[\url{#1}\dotfill]
+\item[\url{#1}\widedotfill]
+}
+
+\newcommand{\Frametext}[1]{%
+\setlength{\fboxrule}{0.05mm}%
+\setlength{\fboxsep}{0.5mm}%
+\fbox{\vphantom{Ag}#1}%
+}
+
+\newcommand{\FramePic}[1]{%
+\setlength{\fboxrule}{0.1mm}%
+\setlength{\fboxsep}{0mm}%
+\fbox{#1}%
+}
+
+\newcommand{\optbreaknh}{\hskip 0pt } %optional break without hyphen: e.g. PlugIn{\optbrknh}Filter
+
+% Erzeugt einen neuen, nicht eingerückten Absatz
+% mit zusätzlichem Abstand:
+\newcommand{\SuperPar}[0]{% 
+\par\bigskip\noindent%
+}
+
+%%% Date-related commands ----------------------------------
+
+\RequirePackage{datetime}
+\showdowfalse	% do not show day of week
+
+% adapted from \newdate in datetime.sty
+\newcommand*{\@modifydate}[4]{%
+\@namedef{date@#1@d}{#2}%
+\@namedef{date@#1@m}{#3}%
+\@namedef{date@#1@y}{#4}%
+}
+
+\newdate{hgb@date}{\the\day}{\the\month}{\the\year}
+\newcommand{\Date}[3]{%	example for use: \Date{16}{5}{2008}
+  \@modifydate{hgb@date}{#1}{#2}{#3}
+}
+
+\newcommand{\hgb@GetDateDay}{\getdateday{hgb@date}}
+\newcommand{\hgb@GetDateMonth}{\getdatemonth{hgb@date}}
+\newcommand{\hgb@GetDateYear}{\getdateyear{hgb@date}}
+\newcommand{\hgb@DisplayDate}{\displaydate{hgb@date}}
+
+%%% Experimental:
+
+\RequirePackage{hyperref}		% ignores \pdfinfo commmands
+\RequirePackage[all]{hypcap} % fixes hyperref problem with references to float captions
+\RequirePackage[novbox]{pdfsync} % notwendig für inverse Suche aus dem PDF viewer
+% novbox Option verhindert Konflikt u.a. mit array-Package
+
+\RequirePackage[noadjust]{cite} % vermeidet zusätzliches Spacing vor [..]
+
+\RequirePackage{ifpdf}
+\ifpdf % LaTeX is in native PDF mode (pdflatex) 
+  \RequirePackage{epstopdf}		% zur automatischen Konvertierung von EPS-Dateien nach PDF für pdflatex
+%  \pdfcompresslevel=0			  % 0 = keine Kompression, 9 = max. Kompression
+%  \pdfimageresolution=300
+\else % LaTeX is in emulation mode (DVI-PS-PDF)
+  \RequirePackage[hyphenbreaks]{breakurl}	% erlaubt Zeilenumbruch von URLs auch ohne pdflatex (DIV, PS, PDF)
+\fi	
+	
+\RequirePackage{enumitem}	% fix excessive vertical spacing in lists
+\setlist{%
+	partopsep = .0ex plus .1ex, 
+	topsep = .6ex plus .3ex, 
+	itemsep = .0ex plus .1ex, 
+	parsep = .4ex plus .2ex
+}
+%\setlist{nolistsep}	% kein Spacing zwischen items
+%\setlist{noitemsep}  % überhaupt kein vertik. Spacing
+
+
+%% -------------------------------------------------------
+\newcommand{\TurnWidowsOff}{%
+\clubpenalty=10000%
+\widowpenalty=10000%
+\displaywidowpenalty=10000}
+
+\newenvironment{nowidows}%
+{\TurnWidowsOff}%
+{}
+
+%%Beispiel
+%\begin{nowidows}
+%Beliebiger Text, in dem absolut keine Hurenkinder zugelassen werden.
+%\end{nowidows}
+
+%%How to display TeX parameters:
+\newcommand{\ShowParameter}[1]{\relax\the#1\showthe#1}
+%Beispiel: \ShowParameter{\clubpenalty}
+
+\setlength{\parskip}{0pt plus 0.1pt}
+\flushbottom
+
+%% -------------------------------------------------------

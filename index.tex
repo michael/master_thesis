@@ -1,0 +1,83 @@
+\documentclass[master,english]{hgbthesis}
+% Zulässige Class Options: 
+%   Typ der Arbeit: diplom (default), master, bachelor, praktikum 
+%   Hauptsprache: german (default), english
+
+\graphicspath{{images/}}    % wo liegen die Bilder?
+
+%%%----------------------------------------------------------
+\begin{document}
+%%%----------------------------------------------------------
+
+%%% Diplomarbeit, Bachelorarbeit, oder Praktikumsbericht?
+%%% Achtung: auch im FH-MASTER-Studium ist eine "Diplomarbeit" vorgesehen!
+
+%%% Entsprechende Blöcke auskommentieren:
+
+%% Felder für ALLE Arbeiten: --------------------------------
+\title{Web-based Information Visualization}
+\author{Michael Aufreiter}
+\studiengang{Software Engineering}
+\studienort{Linz}
+\abgabemonat{November}
+\abgabejahr{2011}
+
+%%% zusätzlich für eine Bachelorarbeit: ---------------------
+\nummer{0855982}   % XX...X = Stud-ID, z.B. 0310238045-A  
+                        % (A = 1. Bachelorarbeit)
+\semester{Wintersemester 2011}
+\gegenstand{Software-Engineering}
+\betreuer{Gerhard~Widmer, Dr.}
+
+
+%%%----------------------------------------------------------
+
+\frontmatter
+\maketitle
+
+
+\tableofcontents
+%%%----------------------------------------------------------
+
+% \include{vorwort}       %ggfs. weglassen
+\include{kurzfassung}
+\include{abstract}
+
+%%%----------------------------------------------------------
+\mainmatter           %Hauptteil (ab hier arab. Seitenzahlen)
+%%%----------------------------------------------------------
+
+\include{introduction}
+\include{information_visualization}
+\include{web_based_visualization}
+\include{requirements}
+\include{unveil}
+\include{evaluation}
+\include{conclusion}
+
+
+%%%----------------------------------------------------------
+%%%Anhang
+
+\appendix
+
+
+
+%%%----------------------------------------------------------
+
+%Literaturverzeichnis
+\clearpage 
+\addcontentsline{toc}{chapter}{\bibname}
+\bibliographystyle{bababbrv} 
+%options: babplain, babunsrt, bababbrv, babalpha 
+%         babplain-fl etc: first/lastname 
+%         babplain-lf etc: last/firstname
+\bibliography{literatur}     %BibTeX-Datei literatur.bib
+
+
+%%%----------------------------------------------------------
+
+%%%Messbox zur Druckkontrolle
+% \include{messbox}
+
+\end{document}
