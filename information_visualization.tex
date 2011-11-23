@@ -19,16 +19,16 @@ In order to create visualizations, fundamental knowledge (theory) about Informat
 \section{The Visualization Process}
 %%%-----------------------------------------------------------------------------
 
-The ultimate purpose of Information Visualization is the acquisition of a mental model of a dataset under investigation. The whole process to reach this goal can be referred to as \emph{The Visualization Process} \cite{WuenscheLobb01}.
+The ultimate purpose of Information Visualization is the acquisition of a mental model of a dataset under investigation. The whole process to reach this goal can be referred to as \emph{The Visualization Process} \cite{WuenscheLobb01}. It involves the creation phase as well as the interpretation of the resulting image by humans in order to gain a mental model and make sense of the data shown. The viewing of a graphical encoding of data should cause an ``Ah-ha!'' reaction in the viewer in the sense that a useful discovery has been made. Information designers can only control the visualization stage with the goal that interpretation of the result is as easy as possible~\cite{Holmberg06}. More specifically, the creation of visualizations involves the application of methods to map data to suitable structures, which can then be encoded through visual properties, such as height, size, color.
 
-\begin{figure}
-\centering
-\includegraphics[width=1\textwidth]{visualization_process}
-\caption{The Visualization Process}
-\label{fig:visprocess}
-\end{figure}
 
-This process, as shown in Figure~\ref{fig:visprocess}, involves the creation phase as well as the interpretation of the resulting image by humans in order to gain a mental model and make sense of the data shown. The viewing of a graphical encoding of data should cause an ``Ah-ha!'' reaction in the viewer in the sense that a useful discovery has been made. Information designers can only control the visualization stage with the goal that interpretation of the result is as easy as possible~\cite{Holmberg06}. More specifically, the creation of visualizations involves the application of methods to map data to suitable structures, which can then be encoded through visual properties (like height, size, color etc.).
+% \begin{figure}
+% \centering
+% \includegraphics[width=1\textwidth]{visualization_process}
+% \caption{The Visualization Process}
+% \label{fig:visprocess}
+% \end{figure}
+
 
 % We'll examine the respective applicability of interaction for the technologies we investigate.
 
@@ -59,11 +59,11 @@ Without doubt, the topic of Information Visualization is fascinating, yet the qu
 \subsection{Visual Analytics}
 %%%-----------------------------------------------------------------------------
 
-Visual Analytics developed out the fields of Information Visualization and Scientific Visualization and has a strong focus on analytical reasoning.
+Visual Analytics developed out the fields of Information Visualization and Scientific Visualization and has a strong focus on analytical reasoning~\cite{Keim2008}.
 
-According to Ziemkiewicz and Kosara~\cite{Ziemkiewicz10}, it combines classical data analysis techniques with those of Information Visualization. In an analysis scenario with the help of Information Visualization users can explore a large amounts of data using visual tools in order to reveal patterns which are not obvious when looking at the raw data.
+According to Ziemkiewicz and Kosara~\cite{Ziemkiewicz10}, it combines classical data analysis techniques with those of Information Visualization. In an analysis scenario with the help of Information Visualization users can explore large amounts of data using visual tools in order to reveal patterns which are not obvious when looking at the raw data.
 
-The importance of Visual Analytics was also recognized by the U.S. Department of Homeland Security when they chartered the National Visualization and Analytics Center (NVAC) in 2004. The goal was to help avoiding future terrorist attacks in the U.S. and around the globe. A lot of groundwork has been done by the NVAC, not least have they contributed a five year research and development agenda for Visual Analytics. \emph{Illuminating the Path - The Research and Development Agenda for Visual Analytics}~\cite{IlluminatingThePath05} addresses the most important needs in R\&D to gain advanced analytical insight. According to them, Visual Analytics is a multidisciplinary field that includes the following focus areas:
+The importance of Visual Analytics was also recognized by the U.S. Department of Homeland Security when they chartered the National Visualization and Analytics Center (NVAC) in 2004. The goal was to help avoiding future terrorist attacks in the U.S. and around the globe. A lot of groundwork has been done by the NVAC, not least have they conducted a five year research and development agenda for Visual Analytics. \emph{Illuminating the Path - The Research and Development Agenda for Visual Analytics}~\cite{IlluminatingThePath05} addresses the most important needs in R\&D to gain advanced analytical insight. According to them, Visual Analytics is a multidisciplinary field that includes the following focus areas:
 
 \begin{itemize}
 \item Analytical reasoning techniques that enable users to obtain deep insights that directly support assessment, planning, and decision making.
@@ -79,7 +79,7 @@ The importance of Visual Analytics was also recognized by the U.S. Department of
 %%%-----------------------------------------------------------------------------
 
 
-Fluit et. al describe the task of data exploration as a process of information search, that is \emph{not of immediate relevance}~\cite{Fluit05}. The difference between data exploration and querying is that \emph{no particular questions are to be answered}. Instead, users get an \emph{overview} of the complete information available and start to make sense of it by digging deeper into the data and viewing certain aspects, but without losing the overall context. The goal here is that users become familiar with the dataset and figure out how it is structured and organized. Based on knowledge gained through exploration, users are able to formulate specific questions afterwards. In order to make possible Exploratory Data Analysis, \emph{Filtering}, \emph{Zooming} and \emph{Detail-on-demand} functionality must be supported by the visualization.
+Fluit et. al describe the task of data exploration as a process of information search, that is \emph{not of immediate relevance}~\cite{Fluit05}. The difference between data exploration and querying is that \emph{no particular questions are to be answered}. Instead, users get an \emph{overview} of the complete information available and start to make sense of it by digging deeper into the data and viewing certain aspects, but without losing the overall context~\cite{keren1993handbook}. The goal here is that users become familiar with the dataset and figure out how it is structured and organized. Based on knowledge gained through exploration, users are able to formulate specific questions afterwards. In order to make possible Exploratory Data Analysis, \emph{Filtering}, \emph{Zooming} and \emph{Detail-on-demand} functionality must be supported by the visualization.
 
 \subsection{Collaborative Visualization}
 %%%-----------------------------------------------------------------------------
@@ -98,7 +98,7 @@ Discussions about trends are often scattered and disconnected from the actual vi
 \begin{figure}
 \centering
 \includegraphics[width=1\textwidth]{dejavis}
-\caption{Dejavis: Showing an analysis of the world's countries by various numerical indicators (such as GDP per capita, life expectancy, infant mortality rate).}
+\caption{Dejavis: Showing an analysis of the world's countries by various numerical indicators, such as GDP per capita, life expectancy and infant mortality rate.}
 \label{fig:dejavis}
 \end{figure}
 
@@ -118,7 +118,7 @@ A prominent example for such a social data analysis tool is ManyEyes\footnote{ht
 %%%-----------------------------------------------------------------------------
 
 
-One promising new field is called Narrative Visualization, which can be described as \emph{telling stories with data}.  Information Visualization, with its ability to reveal narratives within data, is a great way to communicate stories in new different ways~\cite{NarrativeVis10}. Story tellers, like online journalists increasingly start adapting visualizations into their online stories. In some cases the visualization entirely functions in place of a written story. Where is the hunger\footnote{http://one.org/us/actnow/horn.html} (see Figure~\ref{fig:horn}), visually tells the story of the famine in the Horn of Africa.
+One promising new field is called Narrative Visualization, which can be described as \emph{telling stories with data}. Information Visualization, with its ability to reveal narratives within data, is a great way to communicate stories in new different ways~\cite{NarrativeVis10,Gershon:2001}. Story tellers, like online journalists increasingly start adapting visualizations into their online stories. In some cases the visualization may entirely replace a written story. ``Where is the hunger?'' (Figure~\ref{fig:horn}), visually tells the story of the famine in the Horn of Africa\footnote{http://one.org/us/actnow/horn.html}.
 
 
 \section{The Information Seeking Mantra}
@@ -130,7 +130,7 @@ According to Shneiderman~\cite{shneiderman96eyes} the bandwidth of information p
     ``Overview first, zoom and filter, then details-on-demand''
 \end{quotation}
 
-\SuperPar This principle is referred to as \emph{The Information Seeking Mantra} and serves as a starting point for creating visualizations. Based on that, Shneiderman also proposes a Task by Data Type Taxonomy (TTT) with seven data types (1-, 2-, 3-dimensional data, temporal data, multi-dimensional data, and tree and network data) and seven tasks (overview, zoom, filter, details-on-demand, relate, history, and extract). In response to Shneiderman the following sections will introduce these \emph{Tasks} and \emph{Data Types} using illustrative examples.
+\SuperPar This principle is referred to as \emph{The Information Seeking Mantra} and serves as a starting point for creating visualizations. Based on that, Shneiderman also proposes a Task by Data Type Taxonomy (TTT) with seven data types (1-, 2-, 3-dimensional data, temporal data, multi-dimensional data, and tree and network data) and seven tasks (overview, zoom, filter, details-on-demand, relate, history, and extract). In response to Shneiderman, the following sections will introduce these \emph{Tasks} and \emph{Data Types} using illustrative examples.
 
 \section{The Tasks} % originally the Issues
 \label{sec:tasks}
@@ -143,12 +143,13 @@ Based on a particular problem scope, namely the examination of a set of document
 % \subsection{The data}
 %%%-----------------------------------------------------------------------------
 
-Our example dataset shows a number of documents that are related to Information Visualization Libraries. Each document is annotated with attributes which are specific for this particular one.
+The example dataset shows a number of documents that are related to visualization libraries. Each document is annotated with attributes which are specific for this particular one.
 
 \begin{center}
     \begin{tabular}{ | l | l | l | p{2.3cm} |}
     \hline
-    Title & Authors & Technolgies used \\ \hline
+    \emph{Title} & \emph{Authors} & \emph{Technolgies used} \\ 
+    \hline\hline
     Protovis & Michael Bostock, Jeffery Heer & SVG, Javascript  \\ \hline
     D3.js & Michael Bostock & SVG, Javascript, CSS \\ \hline
     Processing.js & John Resig & Canvas, Javascript \\ \hline
@@ -170,7 +171,7 @@ Our example dataset shows a number of documents that are related to Information 
 \subsection{Overview}
 %%%-----------------------------------------------------------------------------
 
-As Spence states, the term \emph{overview} cannot be defined easily with precision~\cite{InformationVisualization07}. However, the goal of an overview is to serve as an entry point, preparing the way for further examinations based on a dataset of interest. The user should be able to answer questions like: How many items are in the collection? Adequate overview strategies plus detail (also called context plus focus) are an important criteria to look for~\cite{shneiderman96eyes}.
+As Spence states, the term \emph{overview} cannot be defined easily with precision~\cite{InformationVisualization07}. However, the goal of an overview is to serve as an entry point, preparing the way for further examinations based on a dataset of interest. The user should be able to answer questions like: How many items are in the collection? Adequate overview strategies plus detail (also called context plus focus) are an important criterion to look for~\cite{shneiderman96eyes}.
 
 The visualization, as shown in Figure~\ref{fig:overview}, not only displays available documents in a collection, but also a list of entities that are mentioned within those.
 
@@ -204,7 +205,7 @@ A user might want to zoom in on items of interest. The user is likely to be inte
 \label{fig:filtering}
 \end{figure}
 
-Filtering allows the reduction of a dataset based on a user-defined set of criteria~\cite{Ahlberg92dynamicqueries}. Objects that do not match will no longer be included in the result. Filtering is an important tool for data exploration. It enables analysts to reveal facts that are not obvious when looking at the full dataset. Also implicit coherences can be discovered more easily. Thus, the quality of an interactive visualization depends to a high degree on the availability of extensive filtering options. Figure \ref{fig:filtering} shows a reduced set of documents based on a particular selection of entities.
+Filtering allows the reduction of a dataset based on a user-defined set of criteria~\cite{Ahlberg92dynamicqueries}. Objects that do not match will no longer be included in the result. Filtering is an important tool for data exploration. It enables analysts to reveal facts that are not obvious when looking at the full dataset. Also implicit coherences can be discovered more easily. Thus, the quality of an interactive visualization depends to a high degree on the availability of advanced filtering options. Figure \ref{fig:filtering} shows a reduced set of documents based on a particular selection of entities.
 
 
 \subsection{Details-on-demand}
@@ -279,6 +280,7 @@ The following classification by \emph{Data Type}, adapted from Shneiderman \cite
 \label{fig:tilebars}
 \end{figure}
 
+% \pagebreak
 \SuperPar Examples:
 
 \begin{itemize}
@@ -299,6 +301,7 @@ Planar or map data, such as geographic maps, floor plans or computer chip design
 \label{fig:map}
 \end{figure}
 
+\pagebreak
 \SuperPar User Problems:
 
 \begin{itemize}
@@ -311,7 +314,7 @@ Planar or map data, such as geographic maps, floor plans or computer chip design
 
 \begin{itemize}
 \item \textbf{Graduated Symbol Maps}, as shown in Figure~\ref{fig:map}, place symbols over an underlying map that are used to encode a variable associated with a geographic region~\cite{VisualizationZoo:2010}.
-\item \textbf{Cartograms} distort the shape of a geographic region, so that the area directly encodes an associated data variable. Figure~\ref{fig:cartogram} shows a Dorling Cartogram, which represents each geographic region with a sized circle~\cite{VisualizationZoo:2010}.
+\item \textbf{Cartograms} distort the shape of a geographic region, so that the area directly encodes an associated data variable. Figure~\ref{fig:cartogram} shows a Dorling Cartogram, which represents each geographic region with a sized circle~\cite{Dorling96,VisualizationZoo:2010}.
 \end{itemize}
 
 \begin{figure}
@@ -333,7 +336,7 @@ Planar or map data, such as geographic maps, floor plans or computer chip design
 \label{fig:maya}
 \end{figure}
 
-3-dimensional data involves real-world objects like landscapes, the human body or buildings. Such objects are typically composed of lower level objects, involving volume and complex relationships between each other~\cite{shneiderman96eyes}. Computer-assisted design systems (CAD) for architects or 3D animation software are designed to handle 3-dimensional relationships. While 3D computer graphics and computer assisted design are employed frequently, Information Visualization in three dimensions is still novel. 3D representation in the context of Information Visualization should be applied with care. If a dataset can effectively be represented in two dimensions, plotting them in 3D space does not add any value. What the presenter creates here has been called ``chart chunk'' by Edward Tufte~\cite{tufte09}.
+3-dimensional data involves real-world objects like landscapes, the human body or buildings. Such objects are typically composed of lower level objects, involving volume and complex relationships between each other~\cite{shneiderman96eyes}. Computer-assisted design systems (CAD) for architects or 3D animation software are designed to handle 3-dimensional relationships. While 3D computer graphics and computer assisted design are employed frequently, Information Visualization in three dimensions is still novel. 3D representation in the context of Information Visualization should be applied with care. If a dataset can effectively be represented in two dimensions, plotting them in 3D space does not add any value. What the presenter creates here was called ``chart chunk'' by Edward Tufte~\cite{tufte09}.
 
 
 \begin{figure}
@@ -348,7 +351,7 @@ Planar or map data, such as geographic maps, floor plans or computer chip design
 
 \begin{itemize}
 \item Find adjacent items
-\item Understanding the current position and orientation
+% \item Understanding the current position and orientation when viewing objects
 \item Detecting occlusion
 \item Containment issues
 \end{itemize}
@@ -357,7 +360,7 @@ Planar or map data, such as geographic maps, floor plans or computer chip design
 \SuperPar Examples:
 
 \begin{itemize}
-\item \textbf{Autodesk Maya}\footnote{http://usa.autodesk.com/maya}, as shown in Figure~\ref{fig:maya}, is a 3D composition software that provides tools for \emph{animation}, \emph{modeling}, \emph{visual effects} and \emph{rendering}.
+\item \textbf{Autodesk Maya}\footnote{http://usa.autodesk.com/maya} (Figure~\ref{fig:maya}) is a 3D composition software offering tools for \emph{animation}, \emph{modeling}, \emph{visual effects} and \emph{rendering}.
 \item \textbf{Cloudkick Vis}\footnote{https://www.cloudkick.com/viz/mozilla/} (Figure~\ref{fig:cloudkick}) is a visual server monitoring workspace that displays server status information in realtime.
 \end{itemize}
 
@@ -386,7 +389,7 @@ Temporal data involves values changing over time and is one of the most common f
 
 \begin{itemize}
 \item \textbf{Index Charts} are used to display relative changes over time~\cite{VisualizationZoo:2010}. Figure~\ref{fig:timeseries} shows the gain/loss factors of selected technology stocks.
-\item \textbf{Stacked Graphs} show time series as an aggregation by stacking area charts on top of each other~\cite{VisualizationZoo:2010}. As shown in Figure~\ref{fig:stackedgraph}, the result is a visual summation of time-series values.
+\item \textbf{Stacked Graphs} show time series as an aggregation by stacking area charts on top of each other~\cite{Byron:2008,VisualizationZoo:2010}. As shown in Figure~\ref{fig:stackedgraph}, the result is a visual summation of time-series values.
 \end{itemize}
 
 
@@ -418,14 +421,12 @@ Multi-dimensional data, characterized by items with n-attributes, occurs frequen
   \item Testing hypotheses and predicting future values
 \end{itemize}
 
-
 \SuperPar Examples:
 
 \begin{itemize}
-\item \textbf{Scatterplot Matrices} (Figure~\ref{fig:scatterplot-matrix}) enable visual inspection of correlations between any pair of variables~\cite{VisualizationZoo:2010}.
-\item \textbf{Parallel coordinates} (Figure~\ref{fig:parallel-coordinates}) plot data on parallel axes and connect corresponding points with lines~\cite{VisualizationZoo:2010}. 
+\item \textbf{Scatterplot Matrices} (Figure~\ref{fig:scatterplot-matrix}) enable visual inspection of correlations between any pair of variables~\cite{ScatterplotMatrix2008,VisualizationZoo:2010}.
+\item \textbf{Parallel Coordinates} (Figure~\ref{fig:parallel-coordinates}) plot data on parallel axes and connect corresponding points with lines~\cite{Inselberg:1990,VisualizationZoo:2010}.
 \end{itemize}
-
 
 \begin{figure}
 \centering
@@ -446,7 +447,7 @@ Tree structures or hierarchies describe parent-child relationships and are compo
 \label{fig:nested_circles}
 \end{figure}
 
-
+\pagebreak
 \SuperPar User Problems:
 
 \begin{itemize}
@@ -454,12 +455,12 @@ Tree structures or hierarchies describe parent-child relationships and are compo
 \item How many children does an item have?
 \end{itemize}
 
-
+% \pagebreak
 \SuperPar Examples:
 
 \begin{itemize}
-\item \textbf{Sunbursts} (Figure~\ref{fig:sunburst}) are radial space-filling layouts for tree structures~\cite{VisualizationZoo:2010}.
-\item \textbf{Nested Circles} (Figure~\ref{fig:nested_circles}) can also be used to visualize tree hierarchies by employing a \emph{circle-packing algorithm}~\cite{VisualizationZoo:2010}.
+\item \textbf{Sunbursts} (Figure~\ref{fig:sunburst}) are radial space-filling layouts for tree structures~\cite{Stasko:2000,VisualizationZoo:2010}.
+\item \textbf{Nested Circles} (Figure~\ref{fig:nested_circles}) can also be used to visualize tree hierarchies by employing a \emph{circle-packing algorithm}~\cite{Wang:2006,VisualizationZoo:2010}.
 \end{itemize}
 
 \begin{figure}
@@ -489,12 +490,11 @@ One aspect of data that users wish to explore through visualization is \emph{rel
 \item Which is the shortest or least costly path connecting two items?
 \end{itemize}
 
-
 \SuperPar Examples:
 
 \begin{itemize}
-\item \textbf{Force directed layouts} (Figure~\ref{fig:force-directed-layout}) are a common approach to network visualization by modeling the graph as a physical system. This is achieved by assigning forces among the set of edges and the set of nodes~\cite{VisualizationZoo:2010}.
-\item \textbf{Matrix Views} (Figure~\ref{fig:matrix-view}) represent linked data according to a graph's adjacency matrix.
+\item \textbf{Force directed layouts} (Figure~\ref{fig:force-directed-layout}) are a common approach to network visualization by modeling the graph as a physical system. This is achieved by assigning forces among the set of edges and the set of nodes~\cite{Fruchterman91,VisualizationZoo:2010}.
+\item \textbf{Matrix Views} (Figure~\ref{fig:matrix-view}) represent linked data according to a graph's adjacency matrix~\cite{Henry:2007,VisualizationZoo:2010}.
 \end{itemize}
 
 \begin{figure}

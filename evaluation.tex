@@ -22,7 +22,7 @@ The possible scores (Figure~\ref{tab:scoring}) per requirement range from 0 (not
 \setlength{\tabcolsep}{5mm} % separator between columns
 \def\arraystretch{1.25} % vertical stretch factor
 \begin{tabular}{|r||c|c|c|} \hline
-Score & \emph{Level of Support} & \emph{Quality}\\
+ \emph{Score} & \emph{Level of Support} & \emph{Quality}\\
 \hline\hline
 3 & complete & very high \\
 \hline
@@ -152,14 +152,14 @@ D3 provides a declarative interface for specifying document transformations base
 \subsection{Cross-platform Deployment}
 %%%-----------------------------------------------------------------------------
 
-D3 uses a representation transparent approach and relies on the document object model, and thus on web-native technologies (HTML, SVG and CSS). Consequently, this implies that visualizations specified using D3~\cite{D3} cannot be deployed to platforms other than the web. This is by design, according to Michael Bostock, and in turn offers better accessibility, while transformations of the DOM offer dramatic performance gains.
+D3 uses a representation-transparent approach and relies on the document object model, and thus on web-native technologies (HTML, SVG and CSS). Consequently, this implies that visualizations specified using D3~\cite{D3} cannot be deployed to platforms other than the web. This is by design, according to Michael Bostock, and in turn offers better accessibility, while transformations of the DOM offer dramatic performance gains.
 
 \SuperPar \textbf{Score: 0}
 
 \subsection{Optimization}
 %%%-----------------------------------------------------------------------------
 
-The result of D3 document transformations is a scene graph, represented as DOM elements. Overall visualization performance depends on the performance offered by browsers. There is no intermediate representation (such as a toolkit-specific scene graph) that could be optimized in terms of evaluation or rendering. This is all up to the native browser technologies, such as Javascript, SVG and CSS. Because the DOM is modified directly, D3 can avoid unnecessary computation, as transformations can be limited to selected attributes. The author assigns a score of 2 here, as D3.js performance can be considered good. However, the design of this library intentionally does not offer much room for rendering optimization.
+The result of D3 document transformations is a scene graph, represented as DOM elements. Overall visualization performance depends on the performance offered by browsers. There is no intermediate representation (such as a toolkit-specific scene graph) that could be optimized in terms of evaluation or rendering. This is all up to the native browser technologies, such as Javascript, SVG and CSS. Because the DOM is modified directly, D3 can avoid unnecessary computation, as transformations can be limited to selected attributes. The author assigns a score of 2 here, as D3.js performance can be considered good. However, the design of this library intentionally does not offer much room for optimization of rendering
 
 \SuperPar \textbf{Score: 2}
 
@@ -181,14 +181,14 @@ As a consequence of not introducing a scene graph abstraction, D3.js lacks an ob
 \subsection{Interaction}
 %%%-----------------------------------------------------------------------------
 
-With D3, adding interaction is easy. Because the DOM is exposed, event handlers can be attached to graphical objects directly. Programmers, who have done web-development or have used DOM manipulation libraries such as jQuery\footnote{http://jquery.com/} will immediately be familiar with it. D3 also makes data objects available to event handlers, allowing data-driven interaction.
+With D3, adding interaction is easy. Because the DOM is exposed, event handlers can be attached to graphical objects directly. Programmers, who have done web-development or have used DOM manipulation libraries such as jQuery\footnote{http://jquery.com} will immediately be familiar with it. D3 also makes data objects available to event handlers, allowing data-driven interaction.
 
 \SuperPar \textbf{Score: 3}
 
 \subsection{Animation}
 %%%-----------------------------------------------------------------------------
 
-Being the official successor of Protovis, D3.js comes with comprehensive support for transitions, where attributes or styles are smoothly interpolated over time. Animated transitions can be specified using the transition operator. There is support for staggered animation through individual specification of delay and duration. The easing method can be customized too. Performance experiments have shown that animation works well with a moderate number of motion tweens running at the same time. If the number of animated objects become too high, rendering performance drops significantly. In such scenarios, the Canvas Rendering API has some advantages.
+Being the official successor of Protovis, D3.js comes with comprehensive support for transitions, where attributes or styles are smoothly interpolated over time. Animated transitions can be specified using the transition operator. There is support for staggered animation through individual specification of delay and duration. The easing method can be customized too. Performance experiments have shown that animation works well with a moderate number of motion tweens running at the same time. If the number of animated objects becomes too high, rendering performance drops significantly. In such scenarios, the Canvas Rendering API has some advantages.
 
 \SuperPar \textbf{Score: 3}
 
@@ -212,7 +212,7 @@ D3 can be extended through optional modules which can be included as needed with
 In addition to the qualitative evaluation based on requirements, a performance benchmark has been implemented that opposes Unveil.js with D3.js. 
 The benchmark considers initialization times and frame rates by constructing a scatterplot using different numbers of objects. The results, as shown in Figure~\ref{fig:benchmarks}, reveal that overall performance highly depends on the browser's implementation of native interfaces (HTML Canvas and SVG). Current webkit-based browsers (Google Chrome, Safari) provide high performance rendering for the SVG interface, which makes D3 noticeably faster here. Moreover profiling results have shown that Unveil.js performance (compared to native usage of the Canvas element) is decreased due to the application of matrix transformations. Unveil.js uses its own matrix library in order to let users adjust the object drawing order. However, this has been identified as a significant bottleneck and should be optimized in future.
 
-In general both libraries offer sufficiently fast performance to implement interactive visualizations involving animation. Importantly, the results shown in the benchmark are just a snapshot considering a single use-case. According to the explanations in the qualitative evaluation, visualization designers need to decide themselves, which is the best solution for a particular task.
+In general, both libraries offer sufficiently fast performance to implement interactive visualizations involving animation. Importantly, the results shown in the benchmark are just a snapshot considering a single use-case. According to the explanations in the qualitative evaluation, visualization designers need to decide themselves, which is the best solution for a particular task.
 
 \section{Summary}
 

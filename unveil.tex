@@ -6,7 +6,7 @@
 % \section{Motivation}
 %%%-----------------------------------------------------------------------------
 
-As described in Chapter~\ref{cha:web_based_visualization}, the HTML5 Canvas API is a low-level graphical system. It provides a number of drawing methods that can operate on a 2D pixel buffer. The fact that the Canvas API does not track objects implies that dependencies between them are not possible. A visualization's state (including the current set of data and commands issued by the user) can always be projected to a picture. Thus, the whole graphics buffer is refreshed on every frame. Visualization authors do not have to take care which objects need to be redrawn on a certain event. With Canvas, when a state change happens, the impact on the graphical representation is available on the next redraw (frame). If the same approach is be applied with SVG, a lot of DOM manipulation would be necessary, which would result in poor performance. On the other hand, building complex visualizations without any kind of abstraction requires a lot of manual work and even leads to poor performance, if not optimized by hand.
+As described in Chapter~\ref{cha:web_based_visualization}, the HTML5 Canvas API is a low-level graphical system. It provides a number of drawing methods that can operate on a 2D pixel buffer. The fact that the Canvas API does not track objects implies that dependencies between them are not possible. A visualization's state (including the current set of data and commands issued by the user) can always be projected to a picture. Thus, the whole graphics buffer is refreshed on every frame. Visualization authors do not have to take care which objects need to be redrawn on a certain event. With Canvas, when a state change happens, the impact on the graphical representation is available on the next redraw (frame). If the same approach were applied with SVG, a lot of DOM manipulation would be necessary, resulting in poor performance. On the other hand, building complex visualizations without any kind of abstraction requires a lot of manual work and even leads to poor performance, if not optimized by hand.
 
 Unveil.js is designed to combine the best of both worlds and introduces a slim \emph{layer of abstraction}, namely a \emph{Scene} interface that can be populated with graphical objects, the so called \emph{Actors}. It offers a simple programming interface for creating, updating and removing objects from the scene.
 
@@ -93,7 +93,7 @@ bar.add(new uv.Bar({
 scene.add(bar);
 \end{verbatim}
 
-\SuperPar The x and y coordinates are relative to the parent object. Thus, an object itself does not know where it is located in the coordinate-space. It just renders itself relative to the position of its parent. The positioning is done through \emph{matrix transformations}, where for each object the current context \emph{transformation matrix} (context) is calculated on every frame, which conforms to the functionality of a \emph{Scene Graph}.
+\SuperPar The x and y coordinates are relative to the parent object. Thus, an object itself does not know where it is located in the coordinate-space. It just renders itself relative to the position of its parent. The positioning is done through \emph{matrix transformations}, where for each object the current context \emph{transformation matrix} (context) is calculated, which conforms to the functionality of a \emph{Scene Graph}.
 
 \subsection{Output Displays}
 %%%-----------------------------------------------------------------------------
@@ -110,7 +110,7 @@ scene.display({
 });
 \end{verbatim}
 
-\SuperPar Unveil.js uses an abstract scene (world-coordinates) that can be projected to one or many displays (canvas elements), which have a local coordinate system on their own. Each display can be modified (e.g. zoomed, paned) independently, which conforms to a view transformation in computer game engines (camera analogy). Once a display is set up, scenes can be started by calling the \texttt{start()} method.
+\SuperPar Unveil.js uses an abstract scene (world-coordinates) that can be projected to one or many displays (canvas elements), which have a local coordinate system on their own. Each display can be modified (e.g. zoomed, paned) independently, which conforms to a view transformation in computer game engines (camera analogy). Once a display is set up, scenes can be started by calling the \texttt{start} method.
 
 \begin{verbatim}
 scene.start();
@@ -153,12 +153,11 @@ uv.Bar.prototype.draw = function(ctx) {
 \subsection{Interaction}
 %%%-----------------------------------------------------------------------------
 
-Interaction is a key-feature of modern visualizations. Therefore, Unveil.js aims to provide an abstraction for implementing interaction on Actors. Unlike in SVG, Canvas API users cannot attach event handlers to shapes directly. Instead, users need to detect on their own, i.e. which objects are currently under the cursor. Usually this is done by employing some math, but there is a simpler approach that utilizes the \texttt{isPointInPath()} method provided by the Canvas API. With \texttt{isPointInPath()}, users can check if the current mouse-position is inside the current working path. To support interaction, Unveil.js requires Actors to be equipped with an additional \texttt{drawMask()} method.
+Interaction is a key-feature of modern visualizations. Therefore, Unveil.js aims to provide an abstraction for implementing interaction on Actors. Unlike in SVG, Canvas API users cannot attach event handlers to shapes directly. Instead, users need to detect on their own, i.e. which objects are currently under the cursor. Usually this is done by employing some math, but there is a simpler approach that utilizes the \texttt{isPointInPath} method provided by the Canvas API. With \texttt{isPointInPath}, users can check if the current mouse-position is inside the current working path. To support interaction, Unveil.js requires Actors to be equipped with an additional \texttt{drawMask} method.
 
 \begin{verbatim}
 uv.Bar.prototype.drawMask = function(ctx) {
   ctx.beginPath();
-  
   ctx.moveTo(0, 0);
   ctx.lineTo(this.properties.width, 0);
   ctx.lineTo(this.properties.width, this.properties.height);
@@ -167,7 +166,7 @@ uv.Bar.prototype.drawMask = function(ctx) {
 };
 \end{verbatim}
 
-\SuperPar This simply draws an invisible rectangle. If there are more complex objects, e.g. star-shapes, a rectangle (also known as a bounding-box) can be used as well to add interaction-awareness. All Actors that have a \texttt{drawMask()} implementation can be easily checked against the current cursor position. For completeness, here is the corresponding code that is used internally to perform the actual hit testing.
+\SuperPar This simply draws an invisible rectangle. If there are more complex objects, e.g. star-shapes, a rectangle (also known as a bounding-box) can be used as well to add interaction-awareness. All Actors that have a \texttt{drawMask} implementation can be easily checked against the current cursor position. For completeness, here is the corresponding code that is used internally to perform the actual hit testing.
 
 \begin{verbatim}
 uv.Actor.prototype.checkActive = function(ctx, mouseX, mouseY) {
@@ -254,7 +253,7 @@ the modification matrix.
 \label{cha:dataabstractions}
 %%%-----------------------------------------------------------------------------
 
-Unveil.js was built with a very data-centric approach in mind, offering a number of data abstraction utilities users can use for representing and manipulating domain data. For all data-related concerns Unveil.js relies on Data.js, which is available as a separate library. Data.js is actively maintained and provides a range of features such as queries, filtering, clustering and serializable (thus exchangeable) data-formats. Tabular data can be represented through a \texttt{Data.Collection} interface, whereas complex linked data fits into the \texttt{Data.Graph} model. Not only data but also schema information can be inspected by the user, which can help building even more flexible data-driven visualizations. This can particularly be helpful for implementing \emph{Contextual Data Transformation} functionality, as described by Viegas et. al \cite{manyeyes}.
+Unveil.js was built with a very data-centric approach in mind, offering a number of data abstraction utilities users can use for representing and manipulating domain data. For all data-related concerns Unveil.js relies on Data.js\footnote{http://substance.io/michael/data-js}, which is available as a separate library. Data.js is actively maintained and provides a range of features such as queries, filtering, clustering and serializable (thus exchangeable) data-formats. Tabular data can be represented through a \texttt{Data.Collection} interface, whereas complex linked data fits into the \texttt{Data.Graph} model. Not only data but also schema information can be inspected by the user, which can help building even more flexible data-driven visualizations. This can particularly be helpful for implementing \emph{Contextual Data Transformation} functionality, as described by Viegas et. al \cite{manyeyes}.
 
 Here is an example of a \texttt{Data.Collection} containing real-world data about countries.
 
@@ -293,7 +292,7 @@ var countries_data = {
 };
 \end{verbatim}
 
-\SuperPar The collection shown above not only holds data for certain countries, but also contains meta-information, expressed as properties. As described in Chapter~\ref{cha:web_based_visualization}, this can be particularly useful for analytical and exploratory visualization tools. 
+\SuperPar The collection shown above not only holds data for certain countries, but also contains meta-information, expressed as properties. As described in Chapter~\ref{cha:infovis}, this can be particularly useful for analytical and exploratory visualization tools. 
 
 \begin{verbatim}
 languages.at(0).get('name'); // => "German"
@@ -317,6 +316,7 @@ countries.properties().get('population').name; // => 'Population'
 
 Presumed that a user is interested in the populations grouped by language, the \texttt{Data.Collection.group()} method can be utilized. In order to aggregate the values of population, an aggregator function such as \texttt{Data.Aggregators.SUM} can be used.
 
+\pagebreak
 \begin{verbatim}
 var languages = countries.group(["official_language"], {
   "population": {
@@ -329,7 +329,7 @@ var languages = countries.group(["official_language"], {
 \section{A Data-driven Bar Chart}
 %%%-----------------------------------------------------------------------------
 
-In the following example, some real world domain data is used, namely countries containing information about their population and GDP per capita. These a visualized in a bar chart (Figure~\ref{fig:bars}). Users will be able to switch between different properties, triggering an animation from the old state to the new one. 
+In the following example, some real world domain data is used, namely countries containing information about their population and GDP per capita. These are visualized in a bar chart (Figure~\ref{fig:bars}). Users will be able to switch between different properties, triggering an animation from the old state to the new one. 
 
 \SuperPar The countries example from Section~\ref{cha:dataabstractions} will be used as a data-source.
 
@@ -392,18 +392,16 @@ countries.items().each(function(c, key, index) {
       return this.active ? 'orange' : 'blue'; 
     },
     interactive: true,
-    actors: [
-      {
-        type: 'label',
-        x: 15,
-        y: 20,
-        width: 30,
-        height: 20,
-        text: function() { return c._id.toUpperCase() },
-        textAlign: 'center',
-        fillStyle: '#444'
-      }
-    ]
+    actors: [{
+      type: 'label',
+      x: 15,
+      y: 20,
+      width: 30,
+      height: 20,
+      text: function() { return c._id.toUpperCase() },
+      textAlign: 'center',
+      fillStyle: '#444'
+    }]
   });
 });
 \end{verbatim}
@@ -411,7 +409,7 @@ countries.items().each(function(c, key, index) {
 \SuperPar Additionally, the visualization should allow dynamic switching between properties. For that purpose, property inspection features provided by Data.js are used to find out which numeric properties are available for the collection. By doing so, the visualization can be used with arbitrary collections, even if their structure differs.
 
 \begin{verbatim}
-countries.properties().each(function(p) {
+countries.properties().each(function(p) {
   if (p.type === "number" && p.unique) {
     var option = $('<option value="'+p.key+'">'+p.name+'</option>');
     $('#property').append(option);
@@ -419,7 +417,7 @@ countries.properties().each(function(p) {
 });
 \end{verbatim}
 
-\SuperPar Every time the user selects a property, the bars need to be updated accordingly. In an event handler we are using the \texttt{animate()} method to specify an animated transition of the bar's height.
+\SuperPar Every time the user selects a property, the bars need to be updated accordingly. In an event handler the \texttt{animate} method is used to specify an animated transition of the bar's height.
 
 \begin{verbatim}
 function update() {
@@ -462,7 +460,7 @@ Scatterplot\footnote{http://github.com/michael/scatterplot}, as shown in Figure 
 \subsection{Stacks}
 %%%-----------------------------------------------------------------------------
 
-Stacks\footnote{http://github.com/michael/stacks}, as shown in Figure \ref{fig:stacks}, is a visualization of categorical data. Musical Artists are displayed using self-organizing stacks that hold items of a certain group (e.g. genres like pop music, jazz, etc.). Based on meta-data, users can choose from ordinal properties that should be used to calculate group memberships. Transitions are animated accordingly. 
+Stacks\footnote{http://github.com/michael/stacks}, as shown in Figure \ref{fig:stacks}, is a visualization of categorical data. Musical artists are displayed using self-organizing stacks that hold items of a certain group (e.g. genres like pop music, jazz, etc.). Based on meta-data, users can choose from ordinal properties that should be used to calculate group memberships. Transitions are animated accordingly. 
 
 \begin{figure}
 \centering

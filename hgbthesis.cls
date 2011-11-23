@@ -299,22 +299,22 @@ im\\
 }
 
 \newcommand{\@erklaerungsseite}{%
-\chapter{Erklärung}
-%\thispagestyle{empty}
-
-\noindent
-Hiermit erkläre ich an Eides statt, dass ich die vorliegende Arbeit
-selbst\-ständig und ohne fremde Hilfe verfasst, andere als die
-angegebenen Quellen und Hilfsmittel nicht benutzt und die aus anderen
-Quellen entnommenen Stellen als solche gekennzeichnet habe.
-
-\vspace{10mm}
-\noindent
-\@studienort, am 25. November 2001
-
-\vspace{12mm}
-\noindent
-\@author
+% \chapter{Erklärung}
+% %\thispagestyle{empty}
+% 
+% \noindent
+% Hiermit erkläre ich an Eides statt, dass ich die vorliegende Arbeit
+% selbst\-ständig und ohne fremde Hilfe verfasst, andere als die
+% angegebenen Quellen und Hilfsmittel nicht benutzt und die aus anderen
+% Quellen entnommenen Stellen als solche gekennzeichnet habe.
+% 
+% \vspace{10mm}
+% \noindent
+% \@studienort, am 25. November 2001
+% 
+% \vspace{12mm}
+% \noindent
+% \@author
 }
 
 %------------ Struktur der Frontseiten -------------------

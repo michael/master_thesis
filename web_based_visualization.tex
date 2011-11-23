@@ -27,7 +27,7 @@ According to Bostock and Heer~\cite{Protovis09}, Visualization Systems are tools
 \subsection{Consumer Software}
 %%%-----------------------------------------------------------------------------
 
-The most widely-used visualization tools are built into consumer software, such as spreadsheet applications like Microsoft Excel or Google Spreadsheets. Such tools typically take tabular data as their input and map it to a visual representation based on a user-selected chart-type. Those tools are easy to use and have broad success, although there are a number of shortcomings noted by Wilkinson~\cite{wilkinson2005grammar}.
+The most widely-used visualization tools are built into consumer software, such as spreadsheet applications like Microsoft Excel or Google Spreadsheets. Such tools typically take tabular data as their input and map it to a visual representation based on a user-selected chart-type. Those tools are easy to use and have broad success, although there are a number of shortcomings, noted by Wilkinson~\cite{wilkinson2005grammar}.
 Users only have limited options to adjust the built-in chart types and they cannot introduce new ones. According to Bostock and Heer, due to the high cost of switching tools and the iterative nature of visualization design~\cite{card99}, frequent compromise is likely.
 
 \subsection{Analytical and Exploratory Tools}
@@ -56,7 +56,7 @@ Although creating graphically intensive applications was already possible with 3
 \subsection{SVG}
 %%%-----------------------------------------------------------------------------
 
-SVG (Scaleable Vector Graphs) is an earlier standard for drawing shapes in browsers recommended by the World Wide Web Consortium (W3C). SVG is a higher level graphical system providing an interface to an underlying scene graph, which is subsequently rendered to a bitmap. Users can manipulate attributes of certain objects by interacting with the Document Object Model (DOM) interface. Once attributes have been changed, SVG can automatically re-render parts of the scene. The SVG API enables events to be associated with objects, so users can bind event handlers to certain events, e.g. when the user clicks on a certain rectangle. The SVG scene graph can be represented in XML, which serves as an exchange format. SVG has a number of built-in simple shapes, such as rectangles and circles. For more complex shapes, users can utilize SVG's path element.
+SVG (Scaleable Vector Graphics) is an earlier standard for drawing shapes in browsers recommended by the World Wide Web Consortium (W3C). SVG is a higher level graphical system providing an interface to an underlying scene graph, which is subsequently rendered to a bitmap. Users can manipulate attributes of certain objects by interacting with the Document Object Model (DOM) interface. Once attributes have been changed, SVG can automatically re-render parts of the scene. The SVG API enables events to be associated with objects, so users can bind event handlers to certain events, e.g. when the user clicks on a certain rectangle. The SVG scene graph can be represented in XML, which serves as an exchange format. SVG has a number of built-in simple shapes, such as rectangles and circles. For more complex shapes, users can utilize SVG's path element.
 
 Because SVG can be represented as XML, external editors can be used to design graphical objects, which are composed of primitive SVG-shapes. Those graphical objects can be injected into an existing SVG scene graph, which provides some sort of modularization.
 
@@ -71,7 +71,7 @@ Since Canvas does not maintain graphical objects, hit testing, which is needed f
 \subsection{Javascript}
 %%%-----------------------------------------------------------------------------
 
-The programming language of the web is \emph{Javascript}. While established platforms (e.g. Java, C, C++) provide a vast number of supportive libraries, the availability of such libraries is rather limited for client-side Javascript. In terms of performance, recent Javascript implementations are sufficiently fast. Recent browsers even allow parallel processing through WebWorkers. Because of the nature of the language (interpreted, prototypical, functional), it is questionable if the same programming patterns (familiar from classical environments) should be applied. Javascript developers are increasingly preferring declarative interface design to imperative programming style. The expressive power of domain specific languages (DSL) is also realized frequently and fits well into the Javascript programming model \cite{deursen2000}. A DSL is a higher level abstraction focussing on a particular application domain and providing a simplified interface. In the context of Information Visualization, it seems reasonable to apply those modern patterns to visualization toolkits and supportive libraries as well.
+The programming language of the web is \emph{Javascript}. While established platforms (e.g. Java, C, C++) provide a vast number of supportive libraries, the availability of such libraries is rather limited for client-side Javascript. In terms of performance, current Javascript implementations are sufficiently fast. Modern browsers even allow parallel processing through WebWorkers. Because of the nature of the language (interpreted, prototypical, functional), it is questionable if the same programming patterns (familiar from classical environments) should be applied. Javascript developers are increasingly preferring declarative interface design to imperative programming style. The expressive power of domain specific languages (DSL) is also realized frequently and fits well into the Javascript programming model \cite{deursen2000}. A DSL is a higher level abstraction focussing on a particular application domain and providing a simplified interface. In the context of Information Visualization, it seems reasonable to apply those modern patterns to visualization toolkits and supportive libraries as well.
 
 \section{Tools Landscape}
 %%%-----------------------------------------------------------------------------
@@ -100,9 +100,7 @@ for (int i = 0; i < data.length; i++) {
 
 Protovis is an extensible toolkit for constructing visualizations by composing simple graphical primitives. In Protovis, designers specify visualizations as a hierarchy of marks with visual properties defined as functions of data. This representation achieves a level of expressiveness comparable to low-level graphics systems, while improving efficiency (the effort required to specify a visualization) as well as accessibility (the effort required to learn and modify the representation).
 
-Protovis is similar to other graphics libraries such as Java 2D or Processing: It provides a mechanism for drawing rectangles (bars), circles (dots), lines, and polygons (areas). However, Protovis uses a declarative rather than imperative syntax.
-
-In contrast to Processing.js, Protovis users almost never use a loop. A set of related graphical elements, such as the bars in a bar chart, are specified as a single mark. The mark is associated with data and the properties are specified as functions, encoding the data graphically:
+Protovis is similar to other graphics libraries such as Java 2D or Processing. It provides a mechanism for drawing rectangles (bars), circles (dots), lines, and polygons (areas). However, Protovis uses a declarative rather than imperative syntax. In contrast to Processing.js, Protovis users almost never use a loop. A set of related graphical elements, such as the bars in a bar chart, are specified as a single mark. The mark is associated with data and the properties are specified as functions, encoding the data graphically:
 
 \begin{verbatim}
 vis.add(pv.Bar)
@@ -113,7 +111,25 @@ vis.add(pv.Bar)
   .left(function() { return this.index * 25});
 \end{verbatim}
 
-When it comes to animation, Protovis allows to specify transitions, but it turned out there are critical limitations. That is why this project was discontinued in favor of D3.js, the official successor of Protovis, which uses a fundamentally different approach, targeting animation and interaction~\cite{D3}.
+\SuperPar When it comes to animation, Protovis allows to specify transitions, but it turned out there are critical limitations. That is why this project was discontinued in favor of D3.js, the official successor of Protovis, which uses a fundamentally different approach, targeting animation and interaction~\cite{D3}.
+
+
+\subsection{D3.js}
+%%%-----------------------------------------------------------------------------
+
+D3 (Data-Driven Documents)~\cite{D3} is a progression of Protovis, developed by its original author, Michael Bostock. Instead of using an execution independent specification language, D3 enables direct inspection and manipulation of a web-native representation: the standard Document Object Model (DOM). With D3, designers selectively bind input data to document elements, which are part of the DOM. They are applying dynamic transforms to do both, generate and modify content. Using an representation transparent approach, expressiveness can be improved and the immediate evaluation of operators simplifies debugging and allows iterative development. The downside of this is that D3 is tied to a specific representation, the DOM, and thus cannot be ported to another rendering engine. D3 was built for the purpose of animation to allow highly interactive and responsive data visualizations. The specification of a bar chart would read as follows:
+
+\begin{verbatim}
+var bars = vis.selectAll("g")
+    .data([1, 1.2, 1.7, 1.5, .7, .3])
+  .enter().append("svg:g")
+    .attr("transform", function(d, i) {
+      return "translate(" + i*25 + ", 0)"; 
+    });
+bars.append("svg:rect")
+    .attr("width", 20)
+    .attr("height", function(d) { return d * 80; });
+\end{verbatim}
 
 
 \subsection{Unveil.js}
@@ -139,23 +155,6 @@ var scene = new uv.Scene({
 \end{verbatim}
 
 
-\subsection{D3.js}
-%%%-----------------------------------------------------------------------------
-
-D3 (Data-Driven Documents)~\cite{D3} is a progression of Protovis, developed by its original author, Michael Bostock. Instead of using an execution independent specification language, D3 enables direct inspection and manipulation of a web-native representation: the standard Document Object Model (DOM). With D3, designers selectively bind input data to document elements, which are part of the DOM. They are applying dynamic transforms to do both, generate and modify content. Using an representation transparent approach, expressiveness can be improved and the immediate evaluation of operators simplifies debugging and allows iterative development. The downside of this is that D3 is tied to a specific representation, the DOM, and thus cannot be ported to another rendering engine. D3 was built for the purpose of animation to allow highly interactive and responsive data visualizations. The specification of a bar chart would read as follows:
-
-\begin{verbatim}
-var bars = vis.selectAll("g")
-    .data([1, 1.2, 1.7, 1.5, .7, .3])
-  .enter().append("svg:g")
-    .attr("transform", function(d, i) {
-      return "translate(" + i*25 + ", 0)"; 
-    });
-bars.append("svg:rect")
-    .attr("width", 20)
-    .attr("height", function(d) { return d * 80; });
-\end{verbatim}
-
 
 \subsection{VVVV.js}
 %%%-----------------------------------------------------------------------------
@@ -173,6 +172,10 @@ VVVV is a graphical programming environment for prototyping and developing multi
 \section{Summary}
 %%%-----------------------------------------------------------------------------
 
-It is quite hard to choose the right technology for a certain visualization task. If there are huge amounts of data involved, web-native solutions may be exhausted, thus relying on classical environments may remain a better choice. If your requirements on data transmission are suitable for the web, it depends on the task and the favored approach of the developer, which native technology should be utilized. Browsers use different implementations and support different aspects of these technologies. However, SVG as well as HTML5 Canvas are thoroughly supported by the majority of current web browsers. After looking at the current range of available toolkits, different approaches were identified such as \emph{toolkit-specific abstraction} vs. \emph{representation transparency} or \emph{imperative programming} vs. \emph{declarative specification}. These are all fundamentally different strategies to approach Information Visualization, each having its own field of application. It is important to understand these differences in order to choose the right tools to build efficient visualizations. It must also be taken into account that in practice, developers often need to support legacy browsers, that do not support the new interfaces (e.g. Internet Explorer prior to Version 9 does not support the Canvas Element).
+It is quite hard to choose the right technology for a certain visualization task. If there are huge amounts of data involved, web-native solutions may be exhausted, thus relying on classical environments may remain a better choice. If the requirements on data transmission are suitable for the web, it depends on the task and the favored approach of the developer, which native technology should be utilized. Browsers use different implementations and support different aspects of these technologies. 
+
+However, SVG as well as HTML5 Canvas are thoroughly supported by the majority of current web browsers. After looking at the current range of available toolkits, different approaches were identified such as \emph{toolkit-specific abstraction} vs. \emph{representation transparency} or \emph{imperative programming} vs. \emph{declarative specification}. These are all fundamentally different strategies to approach Information Visualization, each having its own field of application. It is important to understand these differences in order to choose the right tools to build efficient visualizations.
+
+It must also be taken into account that in practice, developers often need to support legacy browsers, that do not support the new interfaces (e.g. Internet Explorer prior to Version 9 does not support the Canvas Element).
 
 \end{english}
