@@ -116,7 +116,7 @@ Unveil.js features some pre-implemented graphical objects (Actors). The object-o
 \subsection{Interaction}
 %%%-----------------------------------------------------------------------------
 
-Unveil.js provides support for event handlers that can be bound to graphical objects. With the regular Canvas API this would not be possible because graphical objects are not tracked. In order enable interaction, hit testing, based on \texttt{isPointiInPath}, must be implemented for each Actor. In terms of performance, Unveil.js detects if interaction could potentially happen (e.g. when the mouse cursor is moved) and allocates resources (in the form of an increased frame rate) only on demand. For custom objects, however, users need to specify a corresponding bounding box themselves, which can be difficult and time-consuming for complex forms.
+Unveil.js provides support for event handlers that can be bound to graphical objects. With the regular Canvas API this would not be possible because graphical objects are not tracked. In order enable interaction, hit testing, based on \texttt{isPointInPath}, must be implemented for each Actor. In terms of performance, Unveil.js detects if interaction could potentially happen (e.g. when the mouse cursor is moved) and allocates resources (in the form of an increased frame rate) only on demand. For custom objects, however, users need to specify a corresponding bounding box themselves, which can be difficult and time-consuming for complex forms.
 
 \SuperPar \textbf{Score: 2}
 
